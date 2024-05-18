@@ -68,8 +68,8 @@ class SendTest extends StatelessWidget {
             print("object");
           },
           style: ElevatedButton.styleFrom(
-            primary: Colors.white,
-            onPrimary: Colors.cyan,
+            // primary: Colors.white,
+            // onPrimary: Colors.cyan,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(32.0),
             ),

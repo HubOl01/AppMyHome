@@ -15,8 +15,8 @@ class mainPageRegLog extends StatelessWidget {
           child: Text("REGISTER", style: TextStyle(color: Colors.cyan, fontSize: 17)),
           onPressed: (){ print('tap-tap'); return runApp(RegisterPage()); },
           style: ElevatedButton.styleFrom(
-            primary: Colors.white,
-            onPrimary: Colors.cyan,
+            // primary: Colors.white,
+            // onPrimary: Colors.cyan,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(32.0),
             ),
@@ -36,8 +36,8 @@ class mainPageRegLog extends StatelessWidget {
           child: Text("LOGIN", style: TextStyle(color: Colors.cyan, fontSize: 18)),
           onPressed: (){ print('tap-tap'); return runApp(LoginPage()); },
           style: ElevatedButton.styleFrom(
-            primary: Colors.white,
-            onPrimary: Colors.cyan,
+            // primary: Colors.white,
+            // onPrimary: Colors.cyan,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(32.0),
             ),

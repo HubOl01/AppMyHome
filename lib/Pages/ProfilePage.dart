@@ -191,7 +191,7 @@ class _ProfileePageState extends State<ProfileePage> {
   ElevatedButton(
     style: ElevatedButton.styleFrom(
         shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(50),),
-      onPrimary: Colors.black,
+      // onPrimary: Colors.black,
       backgroundColor: Colors.red[600]
     ),
       onPressed: () {runApp(LoginPage());},

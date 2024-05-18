@@ -119,8 +119,8 @@ class LoginPage extends StatelessWidget {
         onPressed: () => funcPress(),
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.symmetric(horizontal: 60, vertical: 10),
-          primary: purpleColor,
-          onPrimary: Colors.cyan,
+          // primary: purpleColor,
+          // onPrimary: Colors.cyan,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50.0),
           ),

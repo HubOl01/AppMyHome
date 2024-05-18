@@ -212,8 +212,8 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Text("ВХОД", style: TextStyle(color: Colors.white, fontSize: 18)),
           onPressed: (){ print('tap-tap'); return runApp(LoginPage()); },
           style: ElevatedButton.styleFrom(
-            primary: Color.fromARGB(200, 158, 122, 244),
-            onPrimary: Colors.cyan,
+            // primary: Color.fromARGB(200, 158, 122, 244),
+            // onPrimary: Colors.cyan,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(32.0),
             ),
@@ -585,8 +585,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Color.fromARGB(200, 158, 122, 244),
-                      onPrimary: Colors.white,
+                      // primary: Color.fromARGB(200, 158, 122, 244),
+                      // onPrimary: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(32.0),
                       ),

@@ -14,7 +14,7 @@ class ButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) => ElevatedButton(
     style: ElevatedButton.styleFrom(
         shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(50),),
-      onPrimary: Colors.black,
+      // onPrimary: Colors.black,
       backgroundColor: Color.fromARGB(200, 158, 122, 244)
     ),
       onPressed: onClicked,

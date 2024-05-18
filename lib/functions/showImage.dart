@@ -61,7 +61,7 @@ class _showImageState extends State<showImage> {
           color: Colors.black,
           child: InteractiveViewer(
             constrained: true,
-            alignPanAxis: true,
+            // alignPanAxis: true,
             transformationController: controller,
             boundaryMargin: EdgeInsets.symmetric(vertical: 20),
             clipBehavior: Clip.none,

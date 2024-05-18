@@ -86,8 +86,8 @@ class Send extends StatelessWidget {
           child: Text("Отправить", style: TextStyle(color: Colors.white, fontSize: 20)),
           onPressed: () => funcPress(),
           style: ElevatedButton.styleFrom(
-            primary: purpleColor,
-            onPrimary: Colors.white,
+            // primary: purpleColor,
+            // onPrimary: Colors.white,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(32.0),
             ),
