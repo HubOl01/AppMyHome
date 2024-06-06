@@ -1,7 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-import '../../Styles/Colors.dart';
+import '../../core/Styles/Colors.dart';
 
 class LineCharts extends StatefulWidget {
   const LineCharts({super.key});

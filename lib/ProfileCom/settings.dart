@@ -1,9 +1,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../Login/LOginPage.dart';
-import '../Styles/Themes.dart';
+
+import '../core/Styles/Themes.dart';
 import '../mainTest.dart';
+import '../pages/Login/LoginPage.dart';
 
 class settingsPage extends StatelessWidget {
   const settingsPage({super.key});

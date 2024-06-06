@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '/Model/User.dart';
+import '/core/Model/User.dart';
 
-import '../Styles/Colors.dart';
+import '../core/Styles/Colors.dart';
 import 'Api/api.dart';
 import 'data/profileData.dart';
 import 'detalPage.dart';

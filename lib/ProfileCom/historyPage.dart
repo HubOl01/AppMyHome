@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../Styles/Colors.dart';
+import '../core/Styles/Colors.dart';
 import 'Api/api.dart';
 import 'components/lineCharts.dart';
 import 'data/month.dart';

@@ -1,74 +1,70 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:MyAppHome/Login/LOginPage.dart';
 import 'package:MyAppHome/firebase_options.dart';
-import 'package:MyAppHome/loadingPage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'Data/usersData.dart';
-import 'HomePage.dart';
-import 'Model/User.dart';
-import 'PushNotifications/api/notification.dart';
-import 'mainTest.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:get/get.dart';
+import 'bottomNavigation.dart';
+import 'core/Data/usersData.dart';
+import 'core/Model/User.dart';
+import 'core/PushNotifications/api/notification.dart';
+import 'core/Styles/Colors.dart';
+import 'pages/Login/LoginPage.dart';
 
- Future<void> initializeDefaultFromAndroidResource() async {
-    if (defaultTargetPlatform != TargetPlatform.android || kIsWeb) {
-      print('Not running on Android, skipping');
-      return;
-    }
-    FirebaseApp app = await Firebase.initializeApp();
-    print('Initialized default app $app from Android resource');
+Future<void> initializeDefaultFromAndroidResource() async {
+  if (defaultTargetPlatform != TargetPlatform.android || kIsWeb) {
+    print('Not running on Android, skipping');
+    return;
   }
+  FirebaseApp app = await Firebase.initializeApp();
+  print('Initialized default app $app from Android resource');
+}
 
- class MyHttpOverrides extends HttpOverrides{
+class MyHttpOverrides extends HttpOverrides {
   @override
-
-  HttpClient createHttpClient(SecurityContext? context){
+  HttpClient createHttpClient(SecurityContext? context) {
     return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
-
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }
+
 Future main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
   WidgetsFlutterBinding.ensureInitialized();
   ErrorWidget.builder = (FlutterErrorDetails details) {
     return const SizedBox();
   };
-  // await Firebase.initializeApp();
-  // initializeDefaultFromAndroidResource;
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform
-  );
-//   try {
-//   await Firebase.initializeApp();
-// } catch (e) {
-//   print('Error initializing Firebase: $e');
-// }
-         HttpOverrides.global = MyHttpOverrides();
-  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  HttpOverrides.global = MyHttpOverrides();
   Notific();
   //await base.addUsers(users);
 
-    // runApp(LoadingPage());
-    runApp(MyApp(user: users[0]));
-    // runApp(LoginPage());
-
+  // runApp(LoadingPage());
+  runApp(MyApp(user: users[0]));
+  // runApp(LoginPage());
 }
 
 class MyApp extends StatelessWidget {
   final User user;
-  const MyApp({required this.user});  
-  // @override
+  const MyApp({required this.user});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: HomePage(user: user,),
-      debugShowCheckedModeBanner: false,
+    return KeyboardDismissOnTap(
+      child: GetMaterialApp(
+        home: HomePage(
+          user: user,
+        ),
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          appBarTheme: AppBarTheme(
+            backgroundColor: purpleColor
+          ),
+          // scaffoldBackgroundColor: Colors.white,
+            useMaterial3: false,
+            colorScheme: ColorScheme.fromSeed(seedColor: purpleColor)),
+      ),
     );
   }
-
 }
-

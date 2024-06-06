@@ -3,14 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart' as pathProvider;
 import 'dart:io';
 import 'dart:convert';
-import 'Chats/Data/users.dart';
-import 'Data/usersData.dart';
-import 'Login/LOginPage.dart';
-import 'Utils/UserPerefer.dart';
+import 'core/Data/usersData.dart';
+import 'core/Utils/UserPerefer.dart';
 import 'main.dart';
+import 'pages/Login/LoginPage.dart';
+import 'pages/chatsPages/Chats/Data/users.dart';
 
-class LoadingPage extends StatelessWidget {
+class LoadingPage extends StatefulWidget {
+  @override
+  State<LoadingPage> createState() => _LoadingPageState();
+}
+
+class _LoadingPageState extends State<LoadingPage> {
   bool isLogged = false;
+
 ///////////////
   void getUser() async {
     final directory = await pathProvider.getApplicationSupportDirectory();

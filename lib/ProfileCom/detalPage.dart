@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import '../Styles/Colors.dart';
+import '../core/Styles/Colors.dart';
 import 'Api/api.dart';
 
 bool isClicked = false;
@@ -38,7 +37,6 @@ class _detalPageState extends State<detalPage> {
 
   @override
   Widget build(BuildContext context) {
-    var dateFormat = new DateFormat("dd.MM.yyyy");
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
