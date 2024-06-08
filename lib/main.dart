@@ -42,8 +42,8 @@ Future main() async {
   //await base.addUsers(users);
 
   // runApp(LoadingPage());
-  runApp(MyApp(user: users[0]));
-  // runApp(LoginPage());
+  // runApp(MyApp(user: users[0]));
+  runApp(LoginPage());
 }
 
 class MyApp extends StatelessWidget {

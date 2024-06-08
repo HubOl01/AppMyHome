@@ -1,10 +1,10 @@
-import 'Data/Admin.dart';
-import 'OneChats.dart';
-import '../GeneralChats/Data/General.dart';
-import '../GeneralChats/Pages/GeneralPage.dart';
+import 'Chats/Data/Admin.dart';
+import 'Chats/OneChats.dart';
+import 'GeneralChats/Data/General.dart';
+import 'GeneralChats/Pages/GeneralPage.dart';
 import 'package:flutter/material.dart';
-import '../../../core/Model/User.dart';
-import '../../../core/Styles/Colors.dart';
+import '../../core/Model/User.dart';
+import '../../core/Styles/Colors.dart';
 
 class Chats extends StatefulWidget {
   final User user;
@@ -28,9 +28,9 @@ class _ChatsState extends State<Chats> {
     print(myId);
   }
 
-  String name = 'Общий чат';
+  String name = 'Общий чат УК';
   String name2 = 'Подъезд №2';
-  String name3 = '\"УК\"';
+  String name3 = 'Написать в УК';
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

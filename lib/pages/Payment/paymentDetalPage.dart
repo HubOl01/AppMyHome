@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 
 //import 'package:command_flutter/Payment/ex.dart';
+import 'package:MyAppHome/pages/Payment/Data/expences.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../core/Styles/Colors.dart';
@@ -51,6 +52,8 @@ class _PaymentDetalPageState extends State<PaymentDetalPage> {
     setState(() {});
   }
 
+  bool isExpanded1 = true;
+  bool isExpanded2 = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,9 +73,88 @@ class _PaymentDetalPageState extends State<PaymentDetalPage> {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 20),
-                  SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: buildDataTable()),
+                  ExpansionPanelList(
+                      expansionCallback: (int index, bool isExpanded) {
+                        setState(() {
+                          if (index == 1) {
+                            isExpanded1 = !isExpanded;
+                          } else {
+                            isExpanded2 = !isExpanded;
+                          }
+                        });
+                      },
+                      elevation: 0,
+                      expandedHeaderPadding: EdgeInsets.all(0),
+                      children: [
+                        ExpansionPanel(
+                          isExpanded: isExpanded1,
+                          canTapOnHeader: true,
+                          backgroundColor: Colors.white,
+                          headerBuilder:
+                              (BuildContext context, bool isExpanded) {
+                            return ListTile(
+                              title: Text("Электроэнергия"),
+                              trailing: Text(
+                                  "${widget.expence.powerPrice.toStringAsFixed(2).toString()} руб."),
+                            );
+                          },
+                          body: Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Text("Количество: "),
+                                    Spacer(),
+                                    Text("${widget.expence.power} кВтч"),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Text("Цена за единицу: "),
+                                    Spacer(),
+                                    Text("${powerPriceDefault.toStringAsFixed(2).toString()} руб."),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        ExpansionPanel(
+                          isExpanded: isExpanded2,
+                          canTapOnHeader: true,
+                          backgroundColor: Colors.white,
+                          headerBuilder:
+                              (BuildContext context, bool isExpanded) {
+                            return ListTile(
+                              title: Text("Вода"),
+                              trailing: Text(
+                                  "${widget.expence.waterPrice.toStringAsFixed(2).toString()} руб."),
+                            );
+                          },
+                          body: Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Text("Количество: "),
+                                    Spacer(),
+                                    Text("${widget.expence.water} кВтч"),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Text("Цена за единицу: "),
+                                    Spacer(),
+                                    Text("${waterPriceDefault.toStringAsFixed(2).toString()} руб."),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ]),
                   SizedBox(height: 20),
                   Text(
                       'Сумма к оплате: ${widget.expence.sumCost.toStringAsFixed(2)} руб.',
@@ -123,66 +205,34 @@ class _PaymentDetalPageState extends State<PaymentDetalPage> {
               SizedBox(
                 height: 10,
               ),
-              Container(
-                height: 40,
-                child: TextButton(
-                    onPressed: widget.expence.status.contains("Оплачено")
-                        ? null
-                        : () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const QRViewExample(),
-                            ));
-                          },
-                    style: ElevatedButton.styleFrom(
-                      // backgroundColor: purpleColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(20),
-                        ),
-                      ),
-                    ),
-                    child: Text(
-                      "Оплата по QR-коду",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: purpleColor),
-                    )),
-              )
+              // Container(
+              //   height: 40,
+              //   child: TextButton(
+              //       onPressed: widget.expence.status.contains("Оплачено")
+              //           ? null
+              //           : () {
+              //               Navigator.of(context).push(MaterialPageRoute(
+              //                 builder: (context) => const QRViewExample(),
+              //               ));
+              //             },
+              //       style: ElevatedButton.styleFrom(
+              //         // backgroundColor: purpleColor,
+              //         shape: RoundedRectangleBorder(
+              //           borderRadius: BorderRadius.all(
+              //             Radius.circular(20),
+              //           ),
+              //         ),
+              //       ),
+              //       child: Text(
+              //         "Оплата по QR-коду",
+              //         textAlign: TextAlign.center,
+              //         style: TextStyle(color: purpleColor),
+              //       )),
+              // )
             ],
           ),
         ],
       ),
-    );
-  }
-
-  Widget buildDataTable() {
-    return DataTable(
-      columns: [
-        DataColumn(label: Text('Услуга')),
-        DataColumn(label: Text('Количество')),
-        DataColumn(label: Text('Цена за единицу')),
-        DataColumn(label: Text('Всего')),
-      ],
-      rows: [
-        buildDataRow('Электроэнергия', '${widget.expence.power} кВтч', '8.00',
-            widget.expence.powerPrice.toStringAsFixed(2).toString()),
-        buildDataRow('Вода', '${widget.expence.water} м³', '1.50',
-            widget.expence.waterPrice.toStringAsFixed(2).toString()),
-        buildDataRow('Газ', '${widget.expence.gas} м³', '2.00',
-            widget.expence.gasPrice.toStringAsFixed(2).toString()),
-        // Добавьте другие услуги, если необходимо
-      ],
-    );
-  }
-
-  DataRow buildDataRow(
-      String service, String quantity, String unitPrice, String total) {
-    return DataRow(
-      cells: [
-        DataCell(Text(service)),
-        DataCell(Text(quantity)),
-        DataCell(Text(unitPrice)),
-        DataCell(Text(total)),
-      ],
     );
   }
 }
@@ -269,7 +319,6 @@ class _QRViewExampleState extends State<QRViewExample> {
                   ],
                 ),
               ),
-
           ],
         ),
       ),

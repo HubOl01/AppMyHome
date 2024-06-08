@@ -3,7 +3,7 @@ import 'package:MyAppHome/core/Styles/Colors.dart';
 import 'package:flutter/material.dart';
 
 import 'core/Model/addUser.dart';
-import 'pages/chatsPages/Chats/Chats.dart';
+import 'pages/chatsPages/Chats.dart';
 import 'pages/profilePage/ProfilePage.dart';
 import 'pages/Payment/paymentPage.dart';
 import 'core/PushNotifications/PushNotic.dart';
