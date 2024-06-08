@@ -131,7 +131,7 @@ class _VoteDetailPageState extends State<VoteDetailPage> {
                   onPressed: () {
                     Get.back();
                   },
-                  child: Text("Сохранить")),
+                  child: Text("Проголосовать")),
             ),
           ),
           const SizedBox(
