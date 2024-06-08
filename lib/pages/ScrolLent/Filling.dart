@@ -51,7 +51,7 @@ class _FilingState extends State<Filing> {
     super.initState();
     // fetch();
     setState(() {
-      news = news.reversed.toList();
+      news.sort((a, b) => b.date.compareTo(a.date));
     });
     controller.addListener(() {
       if (controller.position.maxScrollExtent == controller.offset) {}
@@ -116,7 +116,8 @@ class _FilingState extends State<Filing> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(10.0),
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.stretch,
                                         //  mainAxisSize: MainAxisSize.min,
                                         children: [
                                           Row(
@@ -137,7 +138,9 @@ class _FilingState extends State<Filing> {
                                               )
                                             ],
                                           ),
-                                          const SizedBox(height: 10,),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
                                           Text(
                                             "Голосование до ${DateFormat("dd.MM.yyyy").format(voting[index].endDate)}",
                                             style: TextStyle(
@@ -145,7 +148,7 @@ class _FilingState extends State<Filing> {
                                                 color: Colors.black
                                                     .withOpacity(.5),
                                                 fontStyle: FontStyle.italic),
-                                                textAlign: TextAlign.right,
+                                            textAlign: TextAlign.right,
                                           ),
                                         ],
                                       ),
@@ -156,7 +159,7 @@ class _FilingState extends State<Filing> {
                             );
                           }),
                     ),
-                     Padding(
+                    Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Text("Информация",
                           style: TextStyle(
@@ -165,7 +168,9 @@ class _FilingState extends State<Filing> {
                   ],
                 );
               }
-              return CardFeed(index: index,);
+              return CardFeed(
+                index: index,
+              );
             },
           ),
           floatingActionButton: (widget.user.about != "УК")
@@ -297,7 +302,6 @@ class _FilingState extends State<Filing> {
                                                                 .text));
                                                       });
 
-                                            
                                                       newsController.clear();
                                                       textController.clear();
                                                       ControlImage.clear();
@@ -539,7 +543,8 @@ class _FilingState extends State<Filing> {
 class CardFeed extends StatefulWidget {
   final int index;
   const CardFeed({
-    super.key, required this.index,
+    super.key,
+    required this.index,
   });
 
   @override
@@ -551,107 +556,102 @@ class _CardFeedState extends State<CardFeed> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         setState(() {
           print("isDeploy: ${isDeploy}");
           isDeploy = !isDeploy;
         });
       },
       child: Card(
-        
         // color: Colors.red,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         margin: const EdgeInsets.symmetric(vertical: 10),
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(
-                  // news[index].HeadName,
-                  news[widget.index - 1].headName,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
+        child:
+            Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Text(
+              // news[index].HeadName,
+              news[widget.index - 1].headName,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
               ),
-              if (news[widget.index - 1].isImage)
-                CachedNetworkImage(
-                  imageUrl: news[widget.index - 1].image,
-                  fit: BoxFit.cover,
-                  errorWidget: (context, url, error) => const SizedBox(
-                    height: 200,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.error,
-                          color: Colors.red,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 30.0),
-                          child: Text(
-                            "Картинка недоступна.\n Возможно нет интернета или картинка не действительна",
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ],
+              textAlign: TextAlign.center,
+            ),
+          ),
+          if (news[widget.index - 1].isImage)
+            CachedNetworkImage(
+              imageUrl: news[widget.index - 1].image,
+              fit: BoxFit.cover,
+              errorWidget: (context, url, error) => const SizedBox(
+                height: 200,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.error,
+                      color: Colors.red,
                     ),
-                  ),
-                  progressIndicatorBuilder: (context, url, progress) =>
-                      SizedBox(
-                    height: 200,
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        color: purpleColor,
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 30.0),
+                      child: Text(
+                        "Картинка недоступна.\n Возможно нет интернета или картинка не действительна",
+                        textAlign: TextAlign.center,
                       ),
                     ),
+                  ],
+                ),
+              ),
+              progressIndicatorBuilder: (context, url, progress) => SizedBox(
+                height: 200,
+                child: Center(
+                  child: CircularProgressIndicator(
+                    color: purpleColor,
                   ),
                 ),
-              const SizedBox(
-                height: 10,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Text(
-                  //news[index-1].Text,
-                  news[widget.index - 1].text,
-                  maxLines: news[widget.index - 1].isImage && !isDeploy ? 3 : null,
-                  overflow: news[widget.index - 1].isImage && !isDeploy
-                      ? TextOverflow.ellipsis
-                      : null,
-                  style: const TextStyle(
-                    fontSize: 16,
-                  ),
-                  textAlign: TextAlign.justify,
-                ),
+            ),
+          const SizedBox(
+            height: 10,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Text(
+              //news[index-1].Text,
+              news[widget.index - 1].text,
+              maxLines: news[widget.index - 1].isImage && !isDeploy ? 3 : null,
+              overflow: news[widget.index - 1].isImage && !isDeploy
+                  ? TextOverflow.ellipsis
+                  : null,
+              style: const TextStyle(
+                fontSize: 16,
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Text(
-                  "Опубликовано ${DateFormat("dd.MM.yyyy").format(news[widget.index - 1].date)}",
-                  style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.black.withOpacity(.5),
-                      fontStyle: FontStyle.italic),
-                ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-            ]),
+              textAlign: TextAlign.justify,
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Text(
+              "Опубликовано ${DateFormat("dd.MM.yyyy").format(news[widget.index - 1].date)}",
+              style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.black.withOpacity(.5),
+                  fontStyle: FontStyle.italic),
+            ),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+        ]),
       ),
     );
   }

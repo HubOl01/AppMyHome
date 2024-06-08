@@ -4,9 +4,21 @@ import '../../core/Styles/Colors.dart';
 import 'Data/expences.dart';
 import 'paymentDetalPage.dart';
 
-class PaymentPage extends StatelessWidget {
+class PaymentPage extends StatefulWidget {
   const PaymentPage({super.key});
 
+  @override
+  State<PaymentPage> createState() => _PaymentPageState();
+}
+
+class _PaymentPageState extends State<PaymentPage> {
+  @override
+  void initState() {
+    setState(() {
+      expences.sort((a, b) => b.dateTime.compareTo(a.dateTime));
+    });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
