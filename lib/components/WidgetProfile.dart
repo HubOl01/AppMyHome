@@ -149,6 +149,7 @@ class WidgetProfileName extends StatelessWidget {
             children: [
               
                       CircleAvatar(
+                        backgroundColor: Colors.white,
                         backgroundImage: NetworkImage("https://cdn-icons-png.flaticon.com/512/1946/1946429.png"),
                         foregroundImage: NetworkImage(user.imagePath),
                         radius: 50,

@@ -85,7 +85,11 @@ class _messageWidgetState extends State<messageWidget> {
                 constraints: BoxConstraints(maxWidth: 200),
                 decoration: BoxDecoration(
                     color: widget.isMe ? purpleColorMessages : Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(12))),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(12),
+                        topRight: Radius.circular(12),
+                        bottomLeft: Radius.circular(widget.isMe ? 12 : 2),
+                        bottomRight: Radius.circular(widget.isMe ? 2 : 12))),
                 child: InkWell(
                   focusColor: Colors.black,
                   hoverColor: Colors.black,
@@ -141,24 +145,32 @@ class _messageWidgetState extends State<messageWidget> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            padding: EdgeInsets.all(5),
-                            constraints: BoxConstraints(minWidth: 50),
-                            child: Text(
-                              widget.isMe ? "Я" : widget.name,
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
+                          !widget.isMe
+                              ? Container(
+                                  padding: EdgeInsets.only(
+                                      left: 10, right: 10, top: 8),
+                                  constraints: BoxConstraints(minWidth: 50),
+                                  child: Text(
+                                    widget.isMe ? "Я" : widget.name,
+                                    style: TextStyle(
+                                        color: widget.isMe
+                                            ? Colors.white
+                                            : Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                )
+                              : const SizedBox(),
                           widget.type == 'text'
                               ? Container(
                                   constraints: BoxConstraints(minWidth: 100),
-                                  padding: EdgeInsets.only(left: 5, right: 5),
+                                  padding: EdgeInsets.only(
+                                      left: 10, right: 10, top: 8),
                                   child: Text(
                                     widget.message,
                                     style: TextStyle(
-                                      color: Colors.black,
+                                      color: widget.isMe
+                                          ? Colors.white
+                                          : Colors.black,
                                     ),
                                   ),
                                 )
@@ -285,7 +297,9 @@ class _messageWidgetState extends State<messageWidget> {
                                               widget.message,
                                               textAlign: TextAlign.start,
                                               style: TextStyle(
-                                                color: Colors.black,
+                                                color: widget.isMe
+                                                    ? Colors.white
+                                                    : Colors.black,
                                               ),
                                             ),
                                           ),
@@ -350,13 +364,13 @@ class _messageWidgetState extends State<messageWidget> {
                                                                 ),
                                                               )
                                                             : SizedBox(
-                                                            height: 100,
-                                                            child: Center(
-                                                              child: CircularProgressIndicator(
-                                                                  color:
-                                                                      purpleColor),
-                                                            ),
-                                                          )
+                                                                height: 100,
+                                                                child: Center(
+                                                                  child: CircularProgressIndicator(
+                                                                      color:
+                                                                          purpleColor),
+                                                                ),
+                                                              )
                                                         : SizedBox(
                                                             height: 100,
                                                             child: Center(
@@ -409,7 +423,9 @@ class _messageWidgetState extends State<messageWidget> {
                                                   widget.message,
                                                   textAlign: TextAlign.start,
                                                   style: TextStyle(
-                                                    color: Colors.black,
+                                                    color: widget.isMe
+                                                        ? Colors.white
+                                                        : Colors.black,
                                                   ),
                                                 ),
                                               ),
@@ -499,7 +515,9 @@ class _messageWidgetState extends State<messageWidget> {
                                                   widget.message,
                                                   textAlign: TextAlign.start,
                                                   style: TextStyle(
-                                                    color: Colors.black,
+                                                    color: widget.isMe
+                                                        ? Colors.white
+                                                        : Colors.black,
                                                   ),
                                                 ),
                                               ),
@@ -515,7 +533,10 @@ class _messageWidgetState extends State<messageWidget> {
                                 textAlign: TextAlign.right,
                                 time,
                                 style: TextStyle(
-                                    color: Colors.black, fontSize: 10),
+                                    color: widget.isMe
+                                        ? Colors.white
+                                        : Colors.black,
+                                    fontSize: 10),
                               ),
                             )
                           : Container(),

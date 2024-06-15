@@ -1,3 +1,4 @@
+import 'package:MyAppHome/core/Styles/Colors.dart';
 import 'package:flutter/material.dart';
 
 class ButtonWidget extends StatelessWidget {
@@ -15,7 +16,7 @@ class ButtonWidget extends StatelessWidget {
     style: ElevatedButton.styleFrom(
         shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(50),),
       // onPrimary: Colors.black,
-      backgroundColor: Color.fromARGB(200, 158, 122, 244)
+      backgroundColor: purpleColor
     ),
       onPressed: onClicked,
       child: Stack(

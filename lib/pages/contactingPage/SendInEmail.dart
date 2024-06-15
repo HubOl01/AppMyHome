@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'package:MyAppHome/pages/contactingPage/component/customButton.dart';
+import 'package:MyAppHome/pages/contactingPage/component/customInput.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import 'dart:io';
@@ -9,9 +12,7 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import '../../core/Utils/UserPerefer.dart';
 
-
 class Send extends StatefulWidget {
-
   @override
   State<Send> createState() => _SendState();
 }
@@ -34,7 +35,7 @@ class _SendState extends State<Send> {
   String message = "";
 
 /////////////////
-    funcPress() {
+  funcPress() {
     void getUserTesta() async {
       final directory = await pathProvider.getApplicationSupportDirectory();
       final fileDirectory = directory.path + '/datasTest.json';
@@ -60,96 +61,53 @@ class _SendState extends State<Send> {
       subject = subjectController.text;
       message = messageController.text;
 
-      sendEmail( subject: subject, message: message);
+      sendEmail(subject: subject, message: message);
       subjectController.clear();
       messageController.clear();
-
 
       print(
           "name = $name | email = $email | subject = $subject | message = $message");
       print("object");
 
-
-      if(email==""||email=="no"){
+      if (email == "" || email == "no") {
         Fluttertoast.showToast(
-            msg: "Отправка обращения невозможна, обратитесь к руководителю ТСЖ для добавления адреса получателя",
+            msg:
+                "Отправка обращения невозможна, обратитесь к руководителю ТСЖ для добавления адреса получателя",
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb:
-            1,
+            timeInSecForIosWeb: 1,
             backgroundColor: Colors.red,
             textColor: Colors.white,
-            fontSize: 16.0
-        );
+            fontSize: 16.0);
         return;
       }
-
     });
   }
 
 ///////////////////
-  Widget _logButton(){
-    return Container(
-            margin: EdgeInsets.only(top: 1),
-            height: 36,
-            width: 170,
-        child:
-        ElevatedButton(
-          child: Text("Отправить", style: TextStyle(color: Colors.white, fontSize: 20)),
-          onPressed: () => funcPress(),
-          style: ElevatedButton.styleFrom(
-            // primary: purpleColor,
-            // onPrimary: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(32.0),
-            ),
-          ),
-
-        )
-    );
-  }
-
-  Widget _input(Icon icon, String hint, TextEditingController controller, bool hidden){
-    return Container(
-      padding: EdgeInsets.only(right: 20, left: 20),
-      child: TextField(
-        controller: controller,
-        obscureText: hidden,
-        style: TextStyle(fontSize: 20, color: Color.fromARGB(200, 255, 255, 255)),
-        decoration: InputDecoration(
-          filled: true,
-          fillColor: Color.fromARGB(200, 92, 96, 196),
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30.0)),
-          hintStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white60),
-          hintText: hint,
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Color.fromARGB(200, 92, 96, 196), width: 0),
-            borderRadius: BorderRadius.circular(30.0),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Color.fromARGB(200, 227, 228, 251), width: 1),
-            borderRadius: BorderRadius.circular(30.0),
-          ),
-          prefixIcon: Padding(padding: EdgeInsets.only(left: 10, right: 10),
-            child: IconTheme(
-              data: IconThemeData(
-                  color: Colors.purple
-              ),
-              child: icon,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget _logButton() {
+  //   return Container(
+  //       margin: EdgeInsets.only(top: 1),
+  //       height: 36,
+  //       width: 170,
+  //       child: ElevatedButton(
+  //         child: Text("Отправить",
+  //             style: TextStyle(color: Colors.white, fontSize: 20)),
+  //         onPressed: () => funcPress(),
+  //         style: ElevatedButton.styleFrom(
+  //           // primary: purpleColor,
+  //           // onPrimary: Colors.white,
+  //           shape: RoundedRectangleBorder(
+  //             borderRadius: BorderRadius.circular(32.0),
+  //           ),
+  //         ),
+  //       ));
+  // }
 
   Future sendEmail({
     required String subject,
     required String message,
-  })
-
-    async{
+  }) async {
     final serviceId = 'service_gncc96m';
     final templateId = 'template_k23j3e9';
     final userId = 'DfFoFybo_xO5kSEYV';
@@ -157,63 +115,70 @@ class _SendState extends State<Send> {
     final response = await http.post(
       url,
       headers: {
-        'Content-Type':'application/json',
+        'Content-Type': 'application/json',
       },
       body: json.encode({
         'service_id': serviceId,
         'template_id': templateId,
-        'user_id':userId,
-        'template_params':{
+        'user_id': userId,
+        'template_params': {
           'user_name': name,
           'user_email': email,
-          'user_subject':subject,
-          'user_message':message,
+          'user_subject': subject,
+          'user_message': message,
         }
       }),
     );
     print(response.body);
   }
 
-  Widget _form(){
-    return ListView(
+  Widget _form() {
+    return Stack(
       children: [
-        Column(
+        ListView(
           children: [
-
-            SizedBox(height: 330),
-            Padding( padding: EdgeInsets.only(bottom: 20),child: Text("Обращение в УК",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 35),)),
-            Padding(
-                padding: EdgeInsets.only(bottom: 20),
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: _input(Icon(Icons.text_snippet), "Тема обращения", subjectController, false),
-                )
-            ),
-            Padding(
-              padding: EdgeInsets.only(bottom: 20,),
-              child: _input(Icon(Icons.mail), "Сообщение", messageController, false),
-            ),
-            const SizedBox(height: 15),
-            Center(
-              child: Padding(
-                  child: Container(
-                    height: 60,
-                    width: 170,
-                    child: _logButton(),
-
-                  ),
-                  padding: EdgeInsets.only(left: 20,right: 20,bottom: 10 )
-              ),
-            ),
+            Column(
+              children: [
+                const SizedBox(
+                  height: 30,
+                ),
+                Padding(
+                    padding: EdgeInsets.only(bottom: 20),
+                    child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: CustomInput(
+                            controller: subjectController,
+                            label: "Тема обращения",
+                            icon: Icon(Icons.text_snippet)))),
+                Padding(
+                    padding: EdgeInsets.only(
+                      bottom: 20,
+                    ),
+                    child: CustomInput(
+                        controller: messageController,
+                        label: "Сообщение",
+                        isLines: true,
+                        icon: Icon(Icons.mail))),
+                const SizedBox(height: 15),
+              ],
+            )
           ],
-        )
+        ),
+        Positioned(
+          bottom: 20,
+          left: 0,
+          right: 0,
+          child: Center(
+              child: CustomButton(
+                  onPressed: () => funcPress(), title: "Отправить"),
+            ),)
       ],
     );
   }
 
   Widget _logo() {
     return Padding(
-      padding: EdgeInsets.only( bottom: 10),
+      padding: EdgeInsets.only(bottom: 10),
       child: Container(
         child: Align(
           child: Image.asset('assets/mainLogo.png'),
@@ -224,25 +189,11 @@ class _SendState extends State<Send> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-        home:  Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Stack(
-            children: [
-
-              Container(
-                child: Stack(
-                children: [
-                  Image.asset('assets/profile/profileBackground.jpg', width: 1000,fit:BoxFit.fill),
-                  Image.asset('assets/mainLogo.png',width: 1000, fit:BoxFit.fill),
-                  ],
-                  )
-                ),
-              _form(),
-            ],
-          )
-        )
-    );
+    return Scaffold(
+        // backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          title: Text("Обращение в УК"),
+        ),
+        body: _form());
   }
 }

@@ -4,7 +4,7 @@ List<User> users = const [
   User(
       id: '123',
       imagePath:
-          'https://pixelbox.ru/wp-content/uploads/2022/08/avatar-boy-telegram-pixelbox.ru-76.jpg',
+          'https://firebasestorage.googleapis.com/v0/b/chat-data-50b33.appspot.com/o/profiles%2Favatar-boy-telegram-pixelbox.ru-76.jpg?alt=media&token=a869f7eb-5a72-441e-9177-be6ba9a568cc',
       name: "Игорь",
       email: '123@test.ru',
       about: "Житель",
@@ -13,7 +13,7 @@ List<User> users = const [
   User(
       id: '231',
       imagePath:
-          'https://papik.pro/uploads/posts/2021-09/1631773650_15-papik-pro-p-prikolnie-risunki-vse-15.jpg',
+          'https://firebasestorage.googleapis.com/v0/b/chat-data-50b33.appspot.com/o/profiles%2F1631773650_15-papik-pro-p-prikolnie-risunki-vse-15.jpg?alt=media&token=fa5a4763-3636-4d63-ab4d-d8acbc7d704d',
       name: "Максим",
       email: '231@test.ru',
       about: "Житель",
@@ -22,7 +22,7 @@ List<User> users = const [
   User(
       id: '321',
       imagePath:
-          'https://sneg.top/uploads/posts/2023-06/1687465256_sneg-top-p-medved-na-avatarku-v-vatsap-dlya-muzhchin-10.jpg',
+          'https://firebasestorage.googleapis.com/v0/b/chat-data-50b33.appspot.com/o/profiles%2F1687465256_sneg-top-p-medved-na-avatarku-v-vatsap-dlya-muzhchin-10.jpg?alt=media&token=113146d6-8557-4c5d-b9e5-50f9c953a57f',
       name: "Иван",
       email: '321@test.ru',
       about: "Житель",
@@ -30,7 +30,7 @@ List<User> users = const [
       password: "11111"),
   User(
       id: '555',
-      imagePath: 'http://emalis.org/wp-content/uploads/Anon1.jpg',
+      imagePath: 'https://firebasestorage.googleapis.com/v0/b/chat-data-50b33.appspot.com/o/profiles%2Fanon.png?alt=media&token=0a2cacdb-171b-48f1-bb20-cb3af8f1c0d5',
       name: "Ольга",
       email: '555@test.ru',
       about: "Житель",
@@ -38,7 +38,7 @@ List<User> users = const [
       password: 'test'),
   User(
       id: '111',
-      imagePath: 'http://emalis.org/wp-content/uploads/Anon1.jpg',
+      imagePath: 'https://firebasestorage.googleapis.com/v0/b/chat-data-50b33.appspot.com/o/profiles%2Fanon.png?alt=media&token=0a2cacdb-171b-48f1-bb20-cb3af8f1c0d5',
       name: "Анастасия",
       email: '111@test.ru',
       about: "Житель",
@@ -46,7 +46,7 @@ List<User> users = const [
       password: "54321"),
   User(
       id: '12',
-      imagePath: 'http://emalis.org/wp-content/uploads/Anon1.jpg',
+      imagePath: 'https://firebasestorage.googleapis.com/v0/b/chat-data-50b33.appspot.com/o/profiles%2FUK.png?alt=media&token=15217fd3-fd0c-4ecf-b4e4-dd51149bf4f6',
       name: "Маргарита",
       email: '12@test.ru',
       about: "УК",

@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:MyAppHome/pages/Payment/Data/expences.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../core/Styles/Colors.dart';
 import 'Models/expencesModel.dart';
 import 'package:qr_code_scan_pay/qr_code_scan_pay.dart';
@@ -20,10 +21,11 @@ final samUrl =
 String code = '';
 
 class PaymentDetalPage extends StatefulWidget {
-  final ExpenceModel expence;
+  final ExpenseModel expense;
+  final List<ServiceModel> service;
   final url =
       'https://qr.nspk.ru/AS10003P3RH0LJ2A9ROO038L6NT5RU1M?type=01&bank=000000000001&crc=F3D0'; // здесь нужно поменять qr-code как на примере: https://qr.nspk.ru/AS10003P3RH0LJ2A9ROO038L6NT5RU1M?type=01&bank=000000000001&sum=10000&cur=RUB&crc=F3D0
-  const PaymentDetalPage({required this.expence});
+  const PaymentDetalPage({required this.expense, required this.service});
 
   @override
   State<PaymentDetalPage> createState() => _PaymentDetalPageState();
@@ -58,9 +60,10 @@ class _PaymentDetalPageState extends State<PaymentDetalPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.expence.name),
+        title: Text(widget.expense.name),
       ),
       body: ListView(
+        physics: const BouncingScrollPhysics(),
         children: [
           Center(
             child: Container(
@@ -85,17 +88,16 @@ class _PaymentDetalPageState extends State<PaymentDetalPage> {
                       },
                       elevation: 0,
                       expandedHeaderPadding: EdgeInsets.all(0),
-                      children: [
-                        ExpansionPanel(
+                      children: widget.service.map((el)=>ExpansionPanel(
                           isExpanded: isExpanded1,
                           canTapOnHeader: true,
                           backgroundColor: Colors.white,
                           headerBuilder:
                               (BuildContext context, bool isExpanded) {
                             return ListTile(
-                              title: Text("Электроэнергия"),
+                              title: Text(el.name, style: TextStyle(fontWeight: FontWeight.bold),),
                               trailing: Text(
-                                  "${widget.expence.powerPrice.toStringAsFixed(2).toString()} руб."),
+                                  "${el.price.toStringAsFixed(2).toString()} руб.", style: TextStyle(fontWeight: FontWeight.bold),),
                             );
                           },
                           body: Padding(
@@ -106,59 +108,26 @@ class _PaymentDetalPageState extends State<PaymentDetalPage> {
                                   children: [
                                     Text("Количество: "),
                                     Spacer(),
-                                    Text("${widget.expence.power} кВтч"),
+                                    Text("${el.size} ${el.unit}"),
                                   ],
                                 ),
                                 Row(
                                   children: [
                                     Text("Цена за единицу: "),
                                     Spacer(),
-                                    Text("${powerPriceDefault.toStringAsFixed(2).toString()} руб."),
+                                    Text("${el.rate.toStringAsFixed(2).toString()} руб."),
                                   ],
                                 ),
                               ],
                             ),
                           ),
-                        ),
-                        ExpansionPanel(
-                          isExpanded: isExpanded2,
-                          canTapOnHeader: true,
-                          backgroundColor: Colors.white,
-                          headerBuilder:
-                              (BuildContext context, bool isExpanded) {
-                            return ListTile(
-                              title: Text("Вода"),
-                              trailing: Text(
-                                  "${widget.expence.waterPrice.toStringAsFixed(2).toString()} руб."),
-                            );
-                          },
-                          body: Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Text("Количество: "),
-                                    Spacer(),
-                                    Text("${widget.expence.water} кВтч"),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Text("Цена за единицу: "),
-                                    Spacer(),
-                                    Text("${waterPriceDefault.toStringAsFixed(2).toString()} руб."),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ]),
+                        ),).toList()
+                      
+                      ),
                   SizedBox(height: 20),
                   Text(
-                      'Сумма к оплате: ${widget.expence.sumCost.toStringAsFixed(2)} руб.',
-                      style: TextStyle(fontSize: 16)),
+                      'Сумма к оплате: ${widget.expense.sumCost.toStringAsFixed(2)} руб.',
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                 ],
               ),
             ),
@@ -167,12 +136,12 @@ class _PaymentDetalPageState extends State<PaymentDetalPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                height: 40,
-                width: 200,
+                height: 50,
+                width: context.width-30,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       backgroundColor:
-                          widget.expence.status.contains("Оплачено")
+                          widget.expense.status.contains("Оплачено")
                               ? Colors.green
                               : purpleColor,
                       disabledBackgroundColor: Colors.green,
@@ -180,7 +149,7 @@ class _PaymentDetalPageState extends State<PaymentDetalPage> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12), // <-- Radius
                       )),
-                  onPressed: widget.expence.status.contains("Оплачено")
+                  onPressed: widget.expense.status.contains("Оплачено")
                       ? null
                       : () => showModalBottomSheet(
                             context: context,
@@ -194,7 +163,7 @@ class _PaymentDetalPageState extends State<PaymentDetalPage> {
                                 informations, widget.url),
                           ),
                   child: Text(
-                    widget.expence.status.contains("Оплачено")
+                    widget.expense.status.contains("Оплачено")
                         ? "Оплачено"
                         : "Оплатить",
                     textAlign: TextAlign.center,

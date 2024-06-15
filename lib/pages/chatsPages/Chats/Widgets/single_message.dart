@@ -94,7 +94,8 @@ class _SingleMessageState extends State<SingleMessage> {
                               child: Text(
                                 widget.message,
                                 style: TextStyle(
-                                  color: Colors.black,
+                                  color:
+                                      widget.isMe ? Colors.white : Colors.black,
                                 ),
                               ),
                             )
@@ -208,7 +209,7 @@ class _SingleMessageState extends State<SingleMessage> {
                                           widget.message,
                                           textAlign: TextAlign.start,
                                           style: TextStyle(
-                                            color: Colors.black,
+                                            color: widget.isMe ? Colors.white : Colors.black,
                                           ),
                                         ),
                                       ),
@@ -324,7 +325,7 @@ class _SingleMessageState extends State<SingleMessage> {
                                               widget.message,
                                               textAlign: TextAlign.start,
                                               style: TextStyle(
-                                                color: Colors.black,
+                                                color: widget.isMe ? Colors.white : Colors.black,
                                               ),
                                             ),
                                           ),
@@ -413,7 +414,7 @@ class _SingleMessageState extends State<SingleMessage> {
                                               widget.message,
                                               textAlign: TextAlign.start,
                                               style: TextStyle(
-                                                color: Colors.black,
+                                                color: widget.isMe ? Colors.white : Colors.black,
                                               ),
                                             ),
                                           ),
@@ -428,7 +429,7 @@ class _SingleMessageState extends State<SingleMessage> {
                           child: Text(
                             textAlign: TextAlign.right,
                             time,
-                            style: TextStyle(color: Colors.black, fontSize: 10),
+                            style: TextStyle(color: widget.isMe ? Colors.white : Colors.black, fontSize: 10),
                           ),
                         )
                       : Container(),

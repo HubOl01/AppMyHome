@@ -42,8 +42,8 @@ Future main() async {
   //await base.addUsers(users);
 
   // runApp(LoadingPage());
-  // runApp(MyApp(user: users[0]));
-  runApp(LoginPage());
+  runApp(MyApp(user: users[5]));
+  // runApp(LoginPage());
 }
 
 class MyApp extends StatelessWidget {
@@ -58,6 +58,7 @@ class MyApp extends StatelessWidget {
         ),
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+          // scaffoldBackgroundColor: Colors.white,
           appBarTheme: AppBarTheme(
             backgroundColor: purpleColor
           ),
