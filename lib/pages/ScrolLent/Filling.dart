@@ -1,5 +1,6 @@
 import 'package:MyAppHome/core/Styles/Colors.dart';
 import 'package:MyAppHome/pages/ScrolLent/archivePage.dart';
+import 'package:MyAppHome/pages/ScrolLent/editor_news.dart';
 import 'package:MyAppHome/pages/ScrolLent/voteDetailPage.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ import '../../core/Data/NewsData.dart';
 import '../../core/Model/NewsModel.dart';
 import 'JsonTest/Models_news.dart';
 import 'SurveyPage.dart';
+import 'editor_vote.dart';
 
 List<String> listNameVote = [];
 
@@ -145,8 +147,8 @@ class _FilingState extends State<Filing> {
                                           "Голосование до ${DateFormat("dd.MM.yyyy").format(voting[index].endDate)}",
                                           style: TextStyle(
                                               fontSize: 12,
-                                              color: Colors.black
-                                                  .withOpacity(.5),
+                                              color:
+                                                  Colors.black.withOpacity(.5),
                                               fontStyle: FontStyle.italic),
                                           textAlign: TextAlign.right,
                                         ),
@@ -198,7 +200,7 @@ class _FilingState extends State<Filing> {
             }
             return CardFeed(
               list: news,
-              index: index-1,
+              index: index - 1,
             );
           },
         ),
@@ -211,292 +213,32 @@ class _FilingState extends State<Filing> {
                   color: Colors.white,
                 ),
                 onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        contentPadding: EdgeInsets.only(top: 10.0),
-                        shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(32.0))),
-                        title: Text("Добавление"),
-                        content: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            TextButton(
-                                onPressed: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertDialog(
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.all(
-                                                        Radius.circular(
-                                                            32.0))),
-                                            title: Text('Добавить новость'),
-                                            content: SingleChildScrollView(
-                                              child: Column(
-                                                children: [
-                                                  TextField(
-                                                    decoration:
-                                                        InputDecoration(
-                                                      hintText: hint,
-                                                    ),
-                                                    controller:
-                                                        newsController,
-                                                  ),
-                                                  TextField(
-                                                    decoration:
-                                                        InputDecoration(
-                                                      hintText: hint1,
-                                                    ),
-                                                    controller:
-                                                        textController,
-                                                  ),
-                                                  TextField(
-                                                    decoration:
-                                                        InputDecoration(
-                                                      hintText: img,
-                                                    ),
-                                                    controller: ControlImage,
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                            actions: [
-                                              TextButton(
-                                                // style: ElevatedButton
-                                                //     .styleFrom(
-                                                //   backgroundColor:
-                                                //       purpleColor,
-                                                //   foregroundColor:
-                                                //       Colors.white,
-                                                //   elevation: 3,
-                                                //   shape:
-                                                //       RoundedRectangleBorder(
-                                                //           borderRadius:
-                                                //               BorderRadius
-                                                //                   .circular(
-                                                //                       20.0)),
-                                                //   minimumSize:
-                                                //       Size(100, 50),
-                                                // ),
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                                child: Text(
-                                                  "Назад",
-                                                ),
-                                              ),
-                                              // Padding(
-                                              //   padding: EdgeInsets.only(
-                                              //       right: 10),
-                                              // ),
-                                              TextButton(
-                                                  // style: ElevatedButton
-                                                  //     .styleFrom(
-                                                  //   backgroundColor:
-                                                  //       Color.fromARGB(255,
-                                                  //           124, 97, 242),
-                                                  //           foregroundColor: Colors.white,
-                                                  //   elevation: 3,
-                                                  //   shape: RoundedRectangleBorder(
-                                                  //       borderRadius:
-                                                  //           BorderRadius
-                                                  //               .circular(
-                                                  //                   20.0)),
-                                                  //   minimumSize:
-                                                  //       Size(100, 50),
-                                                  // ),
-                                                  onPressed: () async {
-                                                    setState(() {
-                                                      news.add(NewsModel(
-                                                          date:
-                                                              DateTime.now(),
-                                                          headName:
-                                                              newsController
-                                                                  .text,
-                                                          text: textController
-                                                              .text,
-                                                          isImage: ControlImage
-                                                                          .text ==
-                                                                      "" ||
-                                                                  ControlImage
-                                                                      .text
-                                                                      .isEmpty
-                                                              ? false
-                                                              : true,
-                                                          image: ControlImage
-                                                              .text));
-                                                    });
-      
-                                                    newsController.clear();
-                                                    textController.clear();
-                                                    ControlImage.clear();
-      
-                                                    Navigator.of(context)
-                                                        .pop();
-                                                    Navigator.of(context)
-                                                        .pop();
-                                                  },
-                                                  child: Text('Добавить')),
-                                              Padding(
-                                                padding:
-                                                    EdgeInsets.only(left: 10),
-                                              ),
-                                            ]);
-                                      });
-                                },
-                                child: const Text("Добавить новость")),
-                            TextButton(
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(32.0))),
-                                      title: Text("Добавить опрос"),
-                                      content: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Text(
-                                              "Qustions",
-                                              style: TextStyle(
-                                                  color: Colors.black),
-                                            ),
-                                            TextField(
-                                              decoration: InputDecoration(
-                                                hintText: hn,
-                                              ),
-                                              controller: headNameController,
-                                            ),
-                                            Text("Response options",
-                                                style: TextStyle(
-                                                    color: Colors.black)),
-                                            TextField(
-                                              decoration: InputDecoration(
-                                                hintText: ro,
-                                              ),
-                                              controller: nameVoteController,
-                                            ),
-                                            TextButton(
-                                                // style:
-                                                //     ElevatedButton.styleFrom(
-                                                //   backgroundColor:
-                                                //       Color.fromARGB(
-                                                //           255, 124, 97, 242),
-                                                //   foregroundColor:
-                                                //       Colors.white,
-                                                //   elevation: 3,
-                                                //   shape:
-                                                //       RoundedRectangleBorder(
-                                                //           borderRadius:
-                                                //               BorderRadius
-                                                //                   .circular(
-                                                //                       20.0)),
-                                                //   minimumSize: Size(100, 50),
-                                                // ),
-                                                onPressed: () {
-                                                  setState(() {
-                                                    listNameVote.clear();
-                                                  });
-                                                  Navigator.of(context).push(
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              SurveyPage()));
-                                                },
-                                                child: Text(
-                                                    "Добавить ответ...")),
-                                          ]),
-                                      actions: [
-                                        TextButton(
-                                          // style: ElevatedButton.styleFrom(
-                                          //   backgroundColor:
-                                          //       Color.fromARGB(
-                                          //           255, 124, 97, 242),
-                                          //           foregroundColor: Colors.white,
-                                          //   elevation: 3,
-                                          //   shape: RoundedRectangleBorder(
-                                          //       borderRadius:
-                                          //           BorderRadius.circular(
-                                          //               20.0)),
-                                          // minimumSize: Size(100, 50),
-                                          // ),
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: Text("Назад"),
-                                        ),
-                                        TextButton(
-                                            // style:
-                                            //     ElevatedButton.styleFrom(
-                                            //   backgroundColor:
-                                            //       Color.fromARGB(
-                                            //           255, 124, 97, 242),
-                                            //           foregroundColor: Colors.white,
-                                            //   elevation: 3,
-                                            //   shape:
-                                            //       RoundedRectangleBorder(
-                                            //           borderRadius:
-                                            //               BorderRadius
-                                            //                   .circular(
-                                            //                       20.0)),
-                                            //   minimumSize: Size(100, 50),
-                                            // ),
-                                            onPressed: () async {
-                                              setState(() {
-                                                news.add(NewsModel(
-                                                  headName:
-                                                      headNameController.text,
-                                                  text:
-                                                      nameVoteController.text,
-                                                  image: "",
-                                                  isImage: false,
-                                                  date: DateTime.now(),
-                                                ));
-                                              });
-      
-                                              headNameController.clear();
-                                              nameVoteController.clear();
-      
-                                              Navigator.of(context).pop();
-                                              Navigator.of(context).pop();
-                                            },
-                                            child: Text('Добавить опрос')),
-                                      ],
-                                    );
-                                  },
-                                );
-                              },
-                              child: const Text("Добавить опрос"),
-                            ),
-                            // Padding(padding: EdgeInsets.only(top: 30)),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor:
-                                        Color.fromARGB(255, 124, 97, 242),
-                                    foregroundColor: Colors.white,
-                                    elevation: 3,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20.0)),
-                                    // minimumSize: Size(100, 50),
-                                  ),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text("Назад")),
-                            )
-                          ],
-                        ),
-                      );
-                    },
-                  );
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (context) => Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              ListTile(
+                                onTap: () => Get.to(EditorNews()),
+                                leading: Icon(
+                                  Icons.newspaper,
+                                  color: Colors.black45,
+                                ),
+                                title: Text("Добавить информацию"),
+                              ),
+                              ListTile(
+                                onTap: () => Get.to(EditorVote()),
+                                leading: SvgPicture.asset(
+                                  "assets/icons/vote.svg",
+                                  height: 25,
+                                  width: 25,
+                                  colorFilter: ColorFilter.mode(
+                                      Colors.black45, BlendMode.srcIn),
+                                ),
+                                title: Text("Добавить опрос"),
+                              ),
+                            ],
+                          ));
                 }),
       );
     } else {

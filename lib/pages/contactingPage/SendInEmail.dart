@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:MyAppHome/pages/contactingPage/component/customButton.dart';
-import 'package:MyAppHome/pages/contactingPage/component/customInput.dart';
+import 'package:MyAppHome/components/customButton.dart';
+import 'package:MyAppHome/components/customInput.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';

@@ -8,14 +8,14 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 
+import '../../components/customButton.dart';
+import '../../components/customInput.dart';
 import '../../core/Data/usersData.dart';
 import '../../core/Model/addUser.dart';
 import '../../core/Styles/Colors.dart';
 import '../../main.dart';
 import '../chatsPages/Chats/Data/Admin.dart';
 import 'RegisterPage.dart';
-import 'components/customButton.dart';
-import 'components/customInput.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({super.key});

@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'package:MyAppHome/pages/Login/components/customButton.dart';
-import 'package:MyAppHome/pages/Login/components/customInput.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
@@ -9,6 +7,8 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../components/TestLogin.dart';
+import '../../components/customButton.dart';
+import '../../components/customInput.dart';
 import '../../core/Styles/Colors.dart';
 import 'LoginPage.dart';
 

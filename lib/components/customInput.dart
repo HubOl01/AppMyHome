@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../core/Styles/Colors.dart';
+import '../core/Styles/Colors.dart';
 
 class CustomInput extends StatefulWidget {
   final TextEditingController controller;
   final bool isPassword;
   final String label;
-  final Widget icon;
+  final Widget? icon;
   final bool isNumber;
+  final bool isLines;
   const CustomInput(
       {super.key,
       required this.controller,
       this.isPassword = false,
+      this.isLines = false,
       this.isNumber = false,
       required this.label,
-      required this.icon});
+      this.icon});
 
   @override
   State<CustomInput> createState() => _CustomInputState();
@@ -36,6 +38,7 @@ class _CustomInputState extends State<CustomInput> {
         controller: widget.controller,
         obscureText: widget.isPassword ? _isObscure : widget.isPassword,
         cursorColor: purpleColor,
+        maxLines: widget.isLines ? null : 1,
         // style: TextStyle(color: purpleColor),
         decoration: InputDecoration(
           // filled: true,
@@ -66,11 +69,11 @@ class _CustomInputState extends State<CustomInput> {
             borderSide: BorderSide(color: purpleColor, width: 2),
             borderRadius: BorderRadius.circular(20.0),
           ),
-          prefixIcon: Padding(
+          prefixIcon: widget.icon == null ? null : Padding(
             padding: const EdgeInsets.only(left: 10, right: 10),
             child: IconTheme(
               data: IconThemeData(color: purpleColor),
-              child: widget.icon,
+              child: widget.icon!,
             ),
           ),
         ),
