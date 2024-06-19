@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:MyAppHome/core/Styles/Colors.dart';
 import 'package:MyAppHome/pages/ScrolLent/archivePage.dart';
 import 'package:MyAppHome/pages/ScrolLent/editor_news.dart';
 import 'package:MyAppHome/pages/ScrolLent/voteDetailPage.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -12,6 +15,7 @@ import '../../core/Model/User.dart';
 
 import '../../core/Data/NewsData.dart';
 import '../../core/Model/NewsModel.dart';
+import '../../core/cubit/crud_news_cubit.dart';
 import 'JsonTest/Models_news.dart';
 import 'SurveyPage.dart';
 import 'editor_vote.dart';
@@ -69,245 +73,250 @@ class _FilingState extends State<Filing> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-
-    if (status == 'admin') {
-      return Scaffold(
-        backgroundColor: purpleColor.withOpacity(.015),
-        body: ListView.builder(
-          physics: const BouncingScrollPhysics(),
-          controller: controller,
-          itemCount: 5 + 2,
-          itemBuilder: (context, index) {
-            if (index == 0) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: Text("Голосование",
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold)),
-                  ),
-                  SizedBox(
-                    height: 110,
-                    child: ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: voting.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: SizedBox(
-                              width: 300,
-                              child: GestureDetector(
-                                onTap: () => Get.to(VoteDetailPage(
-                                    title: voting[index].title,
-                                    description: voting[index].description,
-                                    votingQuestions:
-                                        voting[index].votingQuestions,
-                                    contacts: voting[index].contacts,
-                                    now: voting[index].now,
-                                    startDate: voting[index].startDate,
-                                    endDate: voting[index].endDate)),
-                                child: Material(
-                                  color: Colors.white,
-                                  elevation: 2,
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.stretch,
-                                      //  mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Row(
-                                          // mainAxisSize: MainAxisSize.min,
-                                          // crossAxisAlignment: CrossAxisAlignment.stretch,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            const SizedBox(
-                                              width: 200,
-                                              child: Text(
-                                                  "Голосование по вопросам благоустройства и инфраструктуры"),
-                                            ),
-                                            SvgPicture.asset(
-                                              "assets/icons/vote.svg",
-                                              height: 40,
-                                              width: 40,
-                                            )
-                                          ],
+    return Scaffold(
+      backgroundColor: purpleColor.withOpacity(.015),
+      body: BlocBuilder<CrudNewsCubit, List<NewsModel>>(
+        builder: (context, state) {
+          return FutureBuilder(
+            future: context.read<CrudNewsCubit>().allNews(),
+            builder: (context, snapshot) {
+              return ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                controller: controller,
+                itemCount: 5 + 2,
+                itemBuilder: (context, index) {
+                  if (index == 0) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.all(10.0),
+                          child: Text("Голосование",
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
+                        ),
+                        SizedBox(
+                          height: 110,
+                          child: ListView.builder(
+                              physics: const BouncingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              itemCount: voting.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: SizedBox(
+                                    width: 300,
+                                    child: GestureDetector(
+                                      onTap: () => Get.to(VoteDetailPage(
+                                          title: voting[index].title,
+                                          description: voting[index].description,
+                                          votingQuestions:
+                                              voting[index].votingQuestions,
+                                          contacts: voting[index].contacts,
+                                          now: voting[index].now,
+                                          startDate: voting[index].startDate,
+                                          endDate: voting[index].endDate)),
+                                      child: Material(
+                                        color: Colors.white,
+                                        elevation: 2,
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.stretch,
+                                            //  mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Row(
+                                                // mainAxisSize: MainAxisSize.min,
+                                                // crossAxisAlignment: CrossAxisAlignment.stretch,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  const SizedBox(
+                                                    width: 200,
+                                                    child: Text(
+                                                        "Голосование по вопросам благоустройства и инфраструктуры"),
+                                                  ),
+                                                  SvgPicture.asset(
+                                                    "assets/icons/vote.svg",
+                                                    height: 40,
+                                                    width: 40,
+                                                  )
+                                                ],
+                                              ),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                "Голосование до ${DateFormat("dd.MM.yyyy").format(voting[index].endDate)}",
+                                                style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.black
+                                                        .withOpacity(.5),
+                                                    fontStyle: FontStyle.italic),
+                                                textAlign: TextAlign.right,
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text(
-                                          "Голосование до ${DateFormat("dd.MM.yyyy").format(voting[index].endDate)}",
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color:
-                                                  Colors.black.withOpacity(.5),
-                                              fontStyle: FontStyle.italic),
-                                          textAlign: TextAlign.right,
-                                        ),
-                                      ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
+                                );
+                              }),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text("Информация",
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
+                        ),
+                      ],
+                    );
+                  } else if (index == 6) {
+                    return GestureDetector(
+                      onTap: () {
+                        Get.to(const ArchivePage());
+                      },
+                      child: Container(
+                        width: context.width,
+                        height: 50,
+                        decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(.12),
+                            borderRadius: BorderRadius.circular(15)),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.archive_rounded),
+                            const SizedBox(
+                              width: 10,
                             ),
-                          );
-                        }),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Text("Информация",
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold)),
-                  ),
-                ],
-              );
-            } else if (index == 6) {
-              return GestureDetector(
-                onTap: () {
-                  Get.to(const ArchivePage());
+                            Text(
+                              "Архив",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+                  return CardFeed(
+                    list: state,
+                    index: index - 1,
+                  );
                 },
-                child: Container(
-                  width: context.width,
-                  height: 50,
-                  decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(.12),
-                      borderRadius: BorderRadius.circular(15)),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.archive_rounded),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        "Архив",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ],
-                  ),
-                ),
               );
             }
-            return CardFeed(
-              list: news,
-              index: index - 1,
-            );
-          },
-        ),
-        floatingActionButton: (widget.user.about != "УК")
-            ? null
-            : FloatingActionButton(
-                backgroundColor: Color.fromARGB(255, 124, 97, 242),
-                child: Icon(
-                  Icons.add_circle,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  showModalBottomSheet(
-                      context: context,
-                      builder: (context) => Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              ListTile(
-                                onTap: () => Get.to(EditorNews()),
-                                leading: Icon(
-                                  Icons.newspaper,
-                                  color: Colors.black45,
-                                ),
-                                title: Text("Добавить информацию"),
+          );
+        },
+      ),
+      floatingActionButton: (widget.user.about != "УК")
+          ? null
+          : FloatingActionButton(
+              backgroundColor: Color.fromARGB(255, 124, 97, 242),
+              child: Icon(
+                Icons.add_circle,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                showModalBottomSheet(
+                    context: context,
+                    builder: (context) => Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            ListTile(
+                              onTap: () => Get.to(EditorNews()),
+                              leading: Icon(
+                                Icons.newspaper,
+                                color: Colors.black45,
                               ),
-                              ListTile(
-                                onTap: () => Get.to(EditorVote()),
-                                leading: SvgPicture.asset(
-                                  "assets/icons/vote.svg",
-                                  height: 25,
-                                  width: 25,
-                                  colorFilter: ColorFilter.mode(
-                                      Colors.black45, BlendMode.srcIn),
-                                ),
-                                title: Text("Добавить опрос"),
+                              title: Text("Добавить информацию"),
+                            ),
+                            ListTile(
+                              onTap: () => Get.to(EditorVote()),
+                              leading: SvgPicture.asset(
+                                "assets/icons/vote.svg",
+                                height: 25,
+                                width: 25,
+                                colorFilter: ColorFilter.mode(
+                                    Colors.black45, BlendMode.srcIn),
                               ),
-                            ],
-                          ));
-                }),
-      );
-    } else {
-      return Center(
-        child: Scaffold(
-          backgroundColor: Color.fromARGB(250, 219, 219, 219),
-          body: ListView.builder(
-            itemCount: NewsForUsers.length,
-            itemBuilder: (context, int index) {
-              return Card(
-                margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                child: Column(children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      //news[index].HeadName,
-                      NewsForUsers[index].title,
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      //news[index].Text,
-                      NewsForUsers[index].text,
-                      style: TextStyle(
-                        fontSize: 20,
-                      ),
-                      textAlign: TextAlign.justify,
-                    ),
-                  ),
-                  if (news[index].isImage == true)
-                    Container(
-                      height: size.height * 0.33,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(4),
-                            bottomRight: Radius.circular(4)),
-                        child: Image.network(NewsForUsers[index].image,
-                            fit: BoxFit.cover,
-                            height: size.height * 0.33,
-                            errorBuilder: (context, url, error) => Center(
-                                    child: new Text(
-                                  "Картинка недоступна.\n Возможно нет интернета или картинка не действительна",
-                                  textAlign: TextAlign.center,
-                                )),
-                            loadingBuilder: (BuildContext context, Widget child,
-                                ImageChunkEvent? loadingProgress) {
-                              if (loadingProgress == null) return child;
-                              return Center(
-                                  child: CircularProgressIndicator(
-                                value: loadingProgress.expectedTotalBytes !=
-                                        null
-                                    ? loadingProgress.cumulativeBytesLoaded /
-                                        loadingProgress.expectedTotalBytes!
-                                    : null,
-                              ));
-                            }),
-                      ),
-                    ),
-                ]),
-              );
-            },
-          ),
-        ),
-      );
-    }
+                              title: Text("Добавить опрос"),
+                            ),
+                          ],
+                        ));
+              }),
+    );
   }
+  //else {
+  // return Center(
+  //   child: Scaffold(
+  //     backgroundColor: Color.fromARGB(250, 219, 219, 219),
+  //     body: ListView.builder(
+  //       itemCount: NewsForUsers.length,
+  //       itemBuilder: (context, int index) {
+  //         return Card(
+  //           margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+  //           child: Column(children: [
+  //             Padding(
+  //               padding: const EdgeInsets.all(8.0),
+  //               child: Text(
+  //                 //news[index].HeadName,
+  //                 NewsForUsers[index].title,
+  //                 style:
+  //                     TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+  //               ),
+  //             ),
+  //             Padding(
+  //               padding: const EdgeInsets.all(8.0),
+  //               child: Text(
+  //                 //news[index].Text,
+  //                 NewsForUsers[index].text,
+  //                 style: TextStyle(
+  //                   fontSize: 20,
+  //                 ),
+  //                 textAlign: TextAlign.justify,
+  //               ),
+  //             ),
+  //             if (state[index].isImage == true)
+  //               Container(
+  //                 height: size.height * 0.33,
+  //                 child: ClipRRect(
+  //                   borderRadius: BorderRadius.only(
+  //                       bottomLeft: Radius.circular(4),
+  //                       bottomRight: Radius.circular(4)),
+  //                   child: Image.network(NewsForUsers[index].image,
+  //                       fit: BoxFit.cover,
+  //                       height: size.height * 0.33,
+  //                       errorBuilder: (context, url, error) => Center(
+  //                               child: new Text(
+  //                             "Картинка недоступна.\n Возможно нет интернета или картинка не действительна",
+  //                             textAlign: TextAlign.center,
+  //                           )),
+  //                       loadingBuilder: (BuildContext context, Widget child,
+  //                           ImageChunkEvent? loadingProgress) {
+  //                         if (loadingProgress == null) return child;
+  //                         return Center(
+  //                             child: CircularProgressIndicator(
+  //                           value: loadingProgress.expectedTotalBytes !=
+  //                                   null
+  //                               ? loadingProgress.cumulativeBytesLoaded /
+  //                                   loadingProgress.expectedTotalBytes!
+  //                               : null,
+  //                         ));
+  //                       }),
+  //                 ),
+  //               ),
+  //           ]),
+  //         );
+  //       },
+  //     ),
+  //   ),
+  // );
 }
 
 class CardFeed extends StatefulWidget {
@@ -352,7 +361,8 @@ class _CardFeedState extends State<CardFeed> {
               textAlign: TextAlign.center,
             ),
           ),
-          if (widget.list[widget.index].isImage)
+          if (widget.list[widget.index].isImage &&
+              widget.list[widget.index].image.contains('http'))
             CachedNetworkImage(
               imageUrl: widget.list[widget.index].image,
               fit: BoxFit.cover,
@@ -388,6 +398,12 @@ class _CardFeedState extends State<CardFeed> {
                   ),
                 ),
               ),
+            ),
+          if (widget.list[widget.index].isImage &&
+              !widget.list[widget.index].image.contains('http'))
+            Image.file(
+              File(widget.list[widget.index].image),
+              fit: BoxFit.cover,
             ),
           const SizedBox(
             height: 10,

@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:MyAppHome/core/cubit/crud_news_cubit.dart';
 import 'package:MyAppHome/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'bottomNavigation.dart';
@@ -51,20 +53,23 @@ class MyApp extends StatelessWidget {
   const MyApp({required this.user});
   @override
   Widget build(BuildContext context) {
-    return KeyboardDismissOnTap(
-      child: GetMaterialApp(
-        home: HomePage(
-          user: user,
-        ),
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          // scaffoldBackgroundColor: Colors.white,
-          appBarTheme: AppBarTheme(
-            backgroundColor: purpleColor
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => CrudNewsCubit()),
+      ],
+      child: KeyboardDismissOnTap(
+        child: GetMaterialApp(
+          home: HomePage(
+            user: user,
           ),
-          // scaffoldBackgroundColor: Colors.white,
-            useMaterial3: false,
-            colorScheme: ColorScheme.fromSeed(seedColor: purpleColor)),
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+              // scaffoldBackgroundColor: Colors.white,
+              appBarTheme: AppBarTheme(backgroundColor: purpleColor),
+              // scaffoldBackgroundColor: Colors.white,
+              useMaterial3: false,
+              colorScheme: ColorScheme.fromSeed(seedColor: purpleColor)),
+        ),
       ),
     );
   }

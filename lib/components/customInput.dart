@@ -10,6 +10,7 @@ class CustomInput extends StatefulWidget {
   final Widget? icon;
   final bool isNumber;
   final bool isLines;
+  final Function(String)? onChanged;
   const CustomInput(
       {super.key,
       required this.controller,
@@ -17,6 +18,7 @@ class CustomInput extends StatefulWidget {
       this.isLines = false,
       this.isNumber = false,
       required this.label,
+      this.onChanged,
       this.icon});
 
   @override
@@ -39,6 +41,7 @@ class _CustomInputState extends State<CustomInput> {
         obscureText: widget.isPassword ? _isObscure : widget.isPassword,
         cursorColor: purpleColor,
         maxLines: widget.isLines ? null : 1,
+        onChanged: widget.onChanged,
         // style: TextStyle(color: purpleColor),
         decoration: InputDecoration(
           // filled: true,
