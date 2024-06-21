@@ -74,12 +74,12 @@ class _CallInformationState extends State<CallInformation> {
               style: TextStyle(fontSize: 18),
             ),
           ),
-          ListTile(
+          widget.email != "" ? ListTile(
             title: Text(widget.email, style: TextStyle(fontSize: 18)),
             onTap: () async {
               sendToSupport();
             },
-          ),
+          ) : const SizedBox(),
           Expanded(
             child: Container(
               height: size.height * 0.3,
