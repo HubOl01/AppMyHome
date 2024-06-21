@@ -1,18 +1,14 @@
-import 'dart:convert';
+import 'package:MyAppHome/core/Model/User.dart';
 import 'package:MyAppHome/pages/profilePage/SOSPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import '../../core/Styles/Colors.dart';
 import '../Login/LoginPage.dart';
 import '../chatsPages/Chats/api/firebase.dart';
-import '/ProfileCom/personalPage.dart';
 import '../CallPages/CallPage.dart';
-import 'dart:io';
-import 'package:path_provider/path_provider.dart' as pathProvider;
 
 import '../contactingPage/SendInEmail.dart';
-import '../../core/Utils/UserPerefer.dart';
 import '../../components/ButtonLoginPage.dart';
 import '../../components/ButtonWidget.dart';
 import '../../components/ButtonWidgetProfile.dart';
@@ -20,7 +16,7 @@ import '../../components/WidgetProfile.dart';
 import 'EditProfilePage.dart';
 
 class ProfileePage extends StatefulWidget {
-  final user;
+  final User user;
   const ProfileePage({required this.user});
   @override
   State<ProfileePage> createState() => _ProfileePageState();
@@ -30,7 +26,7 @@ class _ProfileePageState extends State<ProfileePage> {
   @override
   void initState() {
     super.initState();
-    baseAPI.readAvatar();
+    // baseAPI.readAvatar();
     // getAvatar();
   }
 
@@ -48,15 +44,13 @@ class _ProfileePageState extends State<ProfileePage> {
     return Stack(
       children: <Widget>[
         Container(
-          
           child: Stack(
             children: [
               // Image.asset(
               //     'assets/profile/profileBackground.jpg', width: size.width,
               //     fit: BoxFit.fill),
-              Image.asset(
-                  'assets/profile/GroundUpBar.png',  width: size.width,
-                  fit: BoxFit.fill),
+              Image.asset('assets/profile/GroundUpBar.png',
+                  width: size.width, fit: BoxFit.fill),
             ],
           ),
         ),
@@ -64,7 +58,6 @@ class _ProfileePageState extends State<ProfileePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
-              
                 child: Stack(
               children: [
                 WidgetProfileName(
@@ -158,16 +151,27 @@ class _ProfileePageState extends State<ProfileePage> {
   Widget buildPersonalBillButton() => ButtonWidget(
         text: 'Лицевой Счёт',
         onClicked: () async {
-          final directory = await pathProvider.getApplicationSupportDirectory();
-          final fileDirectory = directory.path + '/datasTest.json';
-          final file = File(fileDirectory);
-          final json = jsonDecode(await file.readAsString());
-          UsersedTest nikita = UsersedTest.fromJson(json['user']);
+          // final directory = await pathProvider.getApplicationSupportDirectory();
+          // final fileDirectory = directory.path + '/datasTest.json';
+          // final file = File(fileDirectory);
+          // final json = jsonDecode(await file.readAsString());
+          // UsersedTest nikita = UsersedTest.fromJson(json['user']);
 
-          Clipboard.setData(new ClipboardData(text: nikita.personalCheck))
+          Clipboard.setData(ClipboardData(text: widget.user.personAccount!))
               .then((_) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text(nikita.personalCheck)));
+            FToast fToast = FToast();
+            fToast.init(context);
+            fToast.showToast(
+                toastDuration: Duration(milliseconds: 1000),
+                child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    decoration: BoxDecoration(
+                        color: Colors.grey.shade800,
+                        borderRadius: BorderRadius.circular(30)),
+                    child: Text(
+                      "Скопирован лицевой счет",
+                      style: TextStyle(color: Colors.white),
+                    )));
           });
         },
       );
@@ -204,8 +208,7 @@ class _ProfileePageState extends State<ProfileePage> {
   Widget build_Setting_Button() => ButtonWidget(
         text: 'Настройки',
         onClicked: () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => EditProfilePage()));
+          Get.to(EditProfilePage());
         },
       );
 }

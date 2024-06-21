@@ -1,18 +1,11 @@
 import 'package:MyAppHome/core/Styles/Colors.dart';
-import 'package:MyAppHome/pages/ScrolLent/voteDetailPage.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:MyAppHome/pages/ScrolLent/cardFeed.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-import '../../core/Data/VotingData.dart';
-import '../../core/Model/User.dart';
+
 
 import '../../core/Data/NewsData.dart';
 import '../../core/Model/NewsModel.dart';
-import 'Filling.dart';
 import 'JsonTest/Models_news.dart';
-import 'SurveyPage.dart';
 
 List<String> listNameVote = [];
 
@@ -73,6 +66,11 @@ class _ArchivePageState extends State<ArchivePage> {
     return Scaffold(
       // backgroundColor: purpleColor.withOpacity(.015),
       appBar: AppBar(
+           elevation: 0,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(10),
+                bottomRight: Radius.circular(10))),
         title: Text("Архив"),
       ),
       body: Container(

@@ -79,7 +79,11 @@ class _SingleMessageState extends State<SingleMessage> {
               ),
               decoration: BoxDecoration(
                   color: widget.isMe ? purpleColorMessages : Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(12))),
+                  borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(12),
+                        topRight: Radius.circular(12),
+                        bottomLeft: Radius.circular(widget.isMe ? 12 : 2),
+                        bottomRight: Radius.circular(widget.isMe ? 2 : 12))),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [

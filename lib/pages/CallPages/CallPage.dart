@@ -129,6 +129,7 @@ class _CallPageState extends State<CallPage> {
                   city: call.city,
                   name: call.name,
                   description: call.description,
+                  email: call.email,
                   street: call.street,
                   tel: call.tel)));
         },

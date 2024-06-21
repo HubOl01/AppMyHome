@@ -27,7 +27,7 @@ class VotingQuestion {
     required this.id,
     required this.questionText,
     required this.options,
-    this.selectedOption,
+    this.selectedOption = -1,
   });
 }
 

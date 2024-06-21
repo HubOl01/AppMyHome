@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    addUser(widget.user.id, widget.user.email, '', widget.user.name, '', '', '',
+    addUser(widget.user.id, widget.user.email, '', widget.user.name, '', '', widget.user.about,
         '', widget.user.numberPhone);
     checkForNotification();
   }

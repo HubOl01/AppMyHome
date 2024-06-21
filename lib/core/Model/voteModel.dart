@@ -1,11 +1,11 @@
-class VoteModel {
+class VoteUserModel {
   String headName;
   String text;
   String image;
   bool isImage;
   DateTime date;
 
-  VoteModel({
+  VoteUserModel({
     required this.headName,
     required this.text,
     required this.image,

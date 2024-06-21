@@ -8,6 +8,7 @@ List<User> users = const [
       name: "Игорь",
       email: '123@test.ru',
       about: "Житель",
+      personAccount: "40703978369486647270",
       numberPhone: "+79011532548",
       password: "12345"),
   User(
@@ -17,6 +18,7 @@ List<User> users = const [
       name: "Максим",
       email: '231@test.ru',
       about: "Житель",
+      personAccount: "42302810157268513825",
       numberPhone: "+79023438487",
       password: "55555"),
   User(
@@ -26,6 +28,7 @@ List<User> users = const [
       name: "Иван",
       email: '321@test.ru',
       about: "Житель",
+      personAccount: "42002840312959555116",
       numberPhone: "+77474186386",
       password: "11111"),
   User(
@@ -34,6 +37,7 @@ List<User> users = const [
       name: "Ольга",
       email: '555@test.ru',
       about: "Житель",
+      personAccount: "42303840851779820708",
       numberPhone: "+79025135742",
       password: 'test'),
   User(
@@ -42,6 +46,7 @@ List<User> users = const [
       name: "Анастасия",
       email: '111@test.ru',
       about: "Житель",
+      personAccount: "42001840890933920395",
       numberPhone: "+79395096219",
       password: "54321"),
   User(
@@ -49,6 +54,7 @@ List<User> users = const [
       imagePath: 'https://firebasestorage.googleapis.com/v0/b/chat-data-50b33.appspot.com/o/profiles%2FUK.png?alt=media&token=15217fd3-fd0c-4ecf-b4e4-dd51149bf4f6',
       name: "Маргарита",
       email: '12@test.ru',
+      personAccount: "42003840843843265645",
       about: "УК",
       numberPhone: "+79435423432",
       password: "12121"),

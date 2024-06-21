@@ -192,6 +192,11 @@ class _SendState extends State<Send> {
     return Scaffold(
         // backgroundColor: Colors.transparent,
         appBar: AppBar(
+             elevation: 0,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(10),
+                bottomRight: Radius.circular(10))),
           title: Text("Обращение в УК"),
         ),
         body: _form());

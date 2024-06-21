@@ -9,8 +9,22 @@ part 'crud_news_state.dart';
 class CrudNewsCubit extends Cubit<List<NewsModel>> {
   CrudNewsCubit() : super(news);
   void addNews(NewsModel newsModel) {
-    return state.add(newsModel);
+    state.add(newsModel);
+    return emit(state);
   }
 
-  Future allNews() async => state;
+  Future allNews() async {
+    print("allNews");
+    return emit(state);
+  }
+
+  Future updateNew(int index, NewsModel newsModel) async {
+    state.insert(index, newsModel);
+    return emit(state);
+  }
+
+  Future deleteNew(NewsModel newsModel) async {
+    state.remove(newsModel);
+    return emit(state);
+  }
 }

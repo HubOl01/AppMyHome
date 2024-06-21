@@ -14,7 +14,14 @@ class _EditorVoteState extends State<EditorVote> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Добавление опроса"),),
+      
+      appBar: AppBar(
+           elevation: 0,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(10),
+                bottomRight: Radius.circular(10))),
+        title: Text("Добавление опроса"),),
       body: ListView(
         physics: const BouncingScrollPhysics(),
         children: [

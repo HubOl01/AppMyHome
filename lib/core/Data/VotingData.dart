@@ -34,7 +34,7 @@ List<VoteModel> voting = [
       ],
       contacts:
           "Если у вас возникнут вопросы или потребуется дополнительная информация, пожалуйста, свяжитесь с нами по телефону +7 (123) 456-7890 или отправьте письмо на электронную почту uk@example.com.",
-      now: DateTime(2024, 6, 6),
-      startDate: DateTime(2024, 6, 7),
-      endDate: DateTime(2024, 6, 15))
+      now: DateTime(2024, DateTime.now().month, DateTime.now().day-1),
+      startDate: DateTime(2024, DateTime.now().month, DateTime.now().day),
+      endDate: DateTime(2024, DateTime.now().month, DateTime.now().day+7))
 ];

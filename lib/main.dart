@@ -13,6 +13,7 @@ import 'core/Data/usersData.dart';
 import 'core/Model/User.dart';
 import 'core/PushNotifications/api/notification.dart';
 import 'core/Styles/Colors.dart';
+import 'core/cubit/crud_vote_cubit.dart';
 import 'pages/Login/LoginPage.dart';
 
 Future<void> initializeDefaultFromAndroidResource() async {
@@ -44,10 +45,10 @@ Future main() async {
   //await base.addUsers(users);
 
   // runApp(LoadingPage());
-  runApp(MyApp(user: users[5]));
+  runApp(MyApp(user: users[0]));
   // runApp(LoginPage());
 }
-
+CrudVoteCubit crudVoteCubit = CrudVoteCubit();
 class MyApp extends StatelessWidget {
   final User user;
   const MyApp({required this.user});
@@ -56,6 +57,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => CrudNewsCubit()),
+        BlocProvider(create: (context) => crudVoteCubit),
       ],
       child: KeyboardDismissOnTap(
         child: GetMaterialApp(

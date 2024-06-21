@@ -13,8 +13,9 @@ import '../../../../core/functions/showVideo.dart';
 
 enum Menu { itemOne, itemTwo, itemThree }
 
-class messageWidget extends StatefulWidget {
+class MessageWidget extends StatefulWidget {
   final String message;
+  final String statusPerson;
   final String file;
   final String nameFile;
   final bool isMe;
@@ -22,8 +23,9 @@ class messageWidget extends StatefulWidget {
   final String name;
   final String type;
 
-  messageWidget({
+  MessageWidget({
     required this.message,
+    required this.statusPerson,
     required this.file,
     required this.nameFile,
     required this.isMe,
@@ -33,10 +35,10 @@ class messageWidget extends StatefulWidget {
   });
 
   @override
-  State<messageWidget> createState() => _messageWidgetState();
+  State<MessageWidget> createState() => _MessageWidgetState();
 }
 
-class _messageWidgetState extends State<messageWidget> {
+class _MessageWidgetState extends State<MessageWidget> {
   late VideoPlayerController _controller;
   @override
   void initState() {
@@ -151,7 +153,7 @@ class _messageWidgetState extends State<messageWidget> {
                                       left: 10, right: 10, top: 8),
                                   constraints: BoxConstraints(minWidth: 50),
                                   child: Text(
-                                    widget.isMe ? "Я" : widget.name,
+                                    widget.isMe ? "" : widget.name + " - " + widget.statusPerson,
                                     style: TextStyle(
                                         color: widget.isMe
                                             ? Colors.white

@@ -16,6 +16,7 @@ enum Menu { itemOne, itemTwo, itemThree }
 class GeneralPage extends StatefulWidget {
   final String currentUserId;
   final String currentName;
+  final String currentStatusPerson;
   final String currentImage;
   final String generalId;
   final String generalName;
@@ -24,6 +25,7 @@ class GeneralPage extends StatefulWidget {
   GeneralPage(
       {required this.currentUserId,
       required this.currentName,
+      required this.currentStatusPerson,
       required this.currentImage,
       required this.generalId,
       required this.generalName,
@@ -114,15 +116,18 @@ class _GeneralPageState extends State<GeneralPage> {
                                   snapshot.data.docs[index]['date'];
                               String name =
                                   snapshot.data.docs[index]['senderName'];
+                              String status =
+                                  snapshot.data.docs[index]['status'];
                               String type = snapshot.data.docs[index]['type'];
 
-                              return messageWidget(
+                              return MessageWidget(
                                   message: snapshot.data.docs[index]['message'],
                                   file: snapshot.data.docs[index]['file'],
                                   nameFile: snapshot.data.docs[index]
                                       ['fileName'],
                                   isMe: isMe,
                                   dateMessage: date,
+                                  statusPerson: status,
                                   name: name,
                                   type: type);
                             });
@@ -137,6 +142,7 @@ class _GeneralPageState extends State<GeneralPage> {
                   currentUserId: widget.currentUserId,
                   currentName: widget.currentName,
                   currentImage: widget.currentImage,
+                  statusPerson: widget.currentStatusPerson,
                   generalId: widget.generalId,
                   generalName: widget.generalName,
                   generalImage: widget.generalImage),
@@ -150,6 +156,7 @@ class _GeneralPageState extends State<GeneralPage> {
 class newMessage extends StatefulWidget {
   final String currentUserId;
   final String currentName;
+  final String statusPerson;
   final String currentImage;
   final String generalId;
   final String generalName;
@@ -158,6 +165,7 @@ class newMessage extends StatefulWidget {
   newMessage({
     required this.currentUserId,
     required this.currentName,
+    required this.statusPerson,
     required this.currentImage,
     required this.generalId,
     required this.generalName,
@@ -184,6 +192,7 @@ class _newMessageState extends State<newMessage> {
       "receiverId": widget.generalId,
       "senderName": widget.currentName,
       "file": "",
+      "status": widget.statusPerson,
       "fileName": "",
       "message": message.trim(),
       "type": "text",

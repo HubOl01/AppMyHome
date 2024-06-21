@@ -92,6 +92,7 @@ class _ChatsState extends State<Chats> {
                                 if (myId != '0') {
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) => GeneralPage(
+                                        currentStatusPerson: myStatus,
                                           currentUserId: myId,
                                           currentName: myUserName,
                                           currentImage: myUrlAvatar,
@@ -144,6 +145,7 @@ class _ChatsState extends State<Chats> {
                                 if (myId != '0') {
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) => GeneralPage(
+                                        currentStatusPerson: myStatus,
                                           currentUserId: myId,
                                           currentName: myUserName,
                                           currentImage: myUrlAvatar,
@@ -197,6 +199,7 @@ class _ChatsState extends State<Chats> {
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) => GeneralPage(
                                           currentUserId: myId,
+                                          currentStatusPerson: myStatus,
                                           currentName: myUserName,
                                           currentImage: myUrlAvatar,
                                           generalId: idGeneral3,

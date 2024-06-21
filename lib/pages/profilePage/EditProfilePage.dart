@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import '../chatsPages/Chats/Data/Admin.dart';
 import '../chatsPages/Chats/api/firebase.dart';
@@ -79,41 +80,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
             child: Column(
               children: [
                 SizedBox(height: 50),
-                // EditableImage(
-                //   // Define the method that will run on the change process of the image.
-                //   onChange: (file) => _directUpdateImage(file),
-                //   // Define the source of the image.
-                //   image: _profilePicFile != null
-                //       ? Image.file(_profilePicFile!, fit: BoxFit.cover)
-                //       : Image.network(myUrlAvatar, fit: BoxFit.cover),
-
-                //   // Define the size of EditableImage.
-                //   size: 150.0,
-
-                //   // Define the Theme of image picker.
-                //   imagePickerTheme: ThemeData(
-                //     // Define the default brightness and colors.
-                //     primaryColor: Colors.white,
-                //     shadowColor: Colors.transparent,
-                //     backgroundColor: Colors.white70,
-                //     iconTheme: const IconThemeData(color: Colors.black87),
-
-                //     // Define the default font family.
-                //     fontFamily: 'Georgia',
-                //   ),
-                //   // Define the border of the image if needed.
-                //   imageBorder: Border.all(color: Colors.black87, width: 2.0),
-
-                //   // Define the border of the icon if needed.
-                //   editIconBorder: Border.all(color: Colors.black87, width: 2.0),
-                // ),
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     getImage();
                     print("TAPPED");
                   },
                   child: CircleAvatar(
-                    foregroundImage: NetworkImage("https://cdn-icons-png.flaticon.com/512/1946/1946429.png"),
+                    backgroundColor: Colors.white,
+                    backgroundImage: NetworkImage(
+                        "https://cdn-icons-png.flaticon.com/512/1946/1946429.png"),
                     radius: 80,
                   ),
                 ),
@@ -170,6 +145,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       );
     }
   }
+
   // PICK IMAGE
   File? imageFile;
   String? xFileName;
@@ -190,36 +166,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       titlePadding: EdgeInsets.all(5),
                       actionsPadding: EdgeInsets.all(5),
                       title: Text("Подтвердить?"),
-                      content: Container(
-                          child: Column(
-                        children: [
-                          Expanded(
-                              child: Image.file(
+                      content: CircleAvatar(
+                          radius: 100,
+                          backgroundImage: FileImage(
                             File(xFile.path),
-                            fit: BoxFit.cover,
+                            // fit: BoxFit.cover,
                           )),
-                          SizedBox(
-                            child: Row(
-                              children: [
-                                
-                                IconButton(
-                                  onPressed: () {
-                                  },
-                                  icon: Icon(
-                                    Icons.close,
-                                    size: 20,
-                                  ),
-                                  splashRadius: 20,
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      )),
                       actions: [
                         TextButton(
                             onPressed: () {
-
                               Navigator.pop(context);
                             },
                             child: Text("Нет")),
@@ -236,63 +191,57 @@ class _EditProfilePageState extends State<EditProfilePage> {
     });
   }
 
+  String image = "";
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-            body: Stack(
-          children: [
-            Container(
-              child: Container(
-                child: Stack(
-                  children: [
-                    Image.asset('assets/profile/profileBackground.jpg',
-                        width: 1000, fit: BoxFit.fill),
-                    Image.asset('assets/profile/GroundUpBar.png',
-                        width: 1000, fit: BoxFit.fill),
-                  ],
-                ),
-              ),
-            ),
-            _FrontButton(),
-          ],
-        )));
+    return Scaffold(
+      appBar: AppBar(
+           elevation: 0,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(10),
+                bottomRight: Radius.circular(10))),
+        title: Text("Настройки профиля"),
+      ),
+      body: _FrontButton(),
+    );
   }
 
-          bool exit = false;
+  bool exit = false;
   Widget buildEditProfileButton() => ButtonWidget(
         text: 'Save',
         onClicked: () {
-          baseAPI.readAvatar();
-          _LoginButtonActio();
-          
-            if (email == "" || middleName == "" || name == "" || surName == "") {
-              Fluttertoast.showToast(
-                  msg: "Ошибка! Необходимо заполнить все поля",
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.CENTER,
-                  timeInSecForIosWeb: 1,
-                  backgroundColor: Colors.red,
-                  textColor: Colors.white,
-                  fontSize: 16.0);
-            } else {
-              emailController.clear();
-              passwordController.clear();
-              nameController.clear();
-              surNameController.clear();
-              middleNameController.clear();
-              Timer(Duration(milliseconds: 50), (){
-              PushToJson(email, password, name, surName, middleName, "no");
-              //Обновление данных для чата
-          });
-              exit = true;
-            }
-              if(exit){
-              baseAPI.updateUser(userEmail: email, userSurname: surName, userName: name, userMiddle_name: middleName, numberPhone: '');
-              // Navigator.of(context).push(MaterialPageRoute(builder: (context) => (HomePage())));
-              addImage(_SAVEprofilePicFile!);
-              }
+          Get.back();
+          // baseAPI.readAvatar();
+          // _LoginButtonActio();
+
+          //   if (email == "" || middleName == "" || name == "" || surName == "") {
+          //     Fluttertoast.showToast(
+          //         msg: "Ошибка! Необходимо заполнить все поля",
+          //         toastLength: Toast.LENGTH_SHORT,
+          //         gravity: ToastGravity.CENTER,
+          //         timeInSecForIosWeb: 1,
+          //         backgroundColor: Colors.red,
+          //         textColor: Colors.white,
+          //         fontSize: 16.0);
+          //   } else {
+          //     emailController.clear();
+          //     passwordController.clear();
+          //     nameController.clear();
+          //     surNameController.clear();
+          //     middleNameController.clear();
+          //     Timer(Duration(milliseconds: 50), (){
+          //     PushToJson(email, password, name, surName, middleName, "no");
+          //     //Обновление данных для чата
+          // });
+          //     exit = true;
+          //   }
+          //     if(exit){
+          //     baseAPI.updateUser(userEmail: email, userSurname: surName, userName: name, userMiddle_name: middleName, numberPhone: '');
+          //     // Navigator.of(context).push(MaterialPageRoute(builder: (context) => (HomePage())));
+          //     addImage(_SAVEprofilePicFile!);
+          //     }
         },
       );
 
@@ -317,5 +266,4 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
     getUserTesta();
   }
-  
 }

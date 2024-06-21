@@ -7,14 +7,14 @@ import 'package:MyAppHome/core/cubit/crud_news_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
 
 import '../../core/Data/NewsData.dart';
 import '../../core/Styles/Colors.dart';
-import '../../core/functions/workImage.dart';
 
 class EditorNews extends StatefulWidget {
-  const EditorNews({super.key});
+  final NewsModel? newsModel;
+  final int? index;
+  const EditorNews({super.key, this.newsModel, this.index});
 
   @override
   State<EditorNews> createState() => _EditorNewsState();
@@ -34,9 +34,29 @@ class _EditorNewsState extends State<EditorNews> {
   }
 
   @override
+  void initState() {
+    setState(() {
+      if (widget.newsModel != null) {
+        titleController.text = widget.newsModel!.headName;
+        descController.text = widget.newsModel!.text;
+        if (widget.newsModel!.isImage &&
+            !widget.newsModel!.image.contains('http')) {
+          image = XFile(widget.newsModel!.image);
+        }
+      }
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+           elevation: 0,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(10),
+                bottomRight: Radius.circular(10))),
         title: Text("Добавление информации"),
       ),
       body: ListView(
@@ -152,24 +172,37 @@ class _EditorNewsState extends State<EditorNews> {
                     : () {
                         if (titleController.text.trim().isNotEmpty &&
                             descController.text.trim().isNotEmpty) {
-                          setState(() {
-                            context.read<CrudNewsCubit>().addNews(NewsModel(
-                                headName: titleController.text,
-                                text: descController.text,
-                                image: image != null ? image!.path : "",
-                                date: DateTime.now(),
-                                isImage: image != null ? true : false));
-                            context.read<CrudNewsCubit>().allNews();
-                            // news.add(NewsModel(
-                            //     headName: titleController.text,
-                            //     text: descController.text,
-                            //     image: image != null ? image!.path : "",
-                            //     date: DateTime.now(),
-                            //     isImage: image != null ? true : false));
-                          });
-                          print("news: ${news.length}");
-                          Get.back();
-                          Get.back();
+                          if (widget.newsModel != null) {
+                            setState(() {
+                              CrudNewsCubit().updateNew(
+                                  widget.index!,
+                                  NewsModel(
+                                      headName: titleController.text,
+                                      text: descController.text,
+                                      image: image != null ? image!.path : "",
+                                      date: DateTime.now(),
+                                      isImage: image != null ? true : false));
+                              CrudNewsCubit().allNews();
+
+                              news.sort((a, b) => b.date.compareTo(a.date));
+                            });
+                            print("news updated");
+                            Get.back();
+                          } else {
+                            setState(() {
+                              CrudNewsCubit().addNews(NewsModel(
+                                  headName: titleController.text,
+                                  text: descController.text,
+                                  image: image != null ? image!.path : "",
+                                  date: DateTime.now(),
+                                  isImage: image != null ? true : false));
+                              CrudNewsCubit().allNews();
+
+                              news.sort((a, b) => b.date.compareTo(a.date));
+                            });
+                            print("news: ${news.length}");
+                            Get.back();
+                          }
                         }
                       },
                 title: "Добавить"),

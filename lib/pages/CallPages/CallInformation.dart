@@ -1,3 +1,4 @@
+import 'package:MyAppHome/core/functions/sendToSupport.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../core/Styles/Colors.dart';
@@ -7,12 +8,14 @@ class CallInformation extends StatefulWidget {
   final String name;
   final String description;
   final String street;
+  final String email;
   final List<dynamic> tel;
   const CallInformation(
       {required this.city,
       required this.name,
       required this.description,
       required this.street,
+      required this.email,
       required this.tel,
       super.key});
 
@@ -71,8 +74,14 @@ class _CallInformationState extends State<CallInformation> {
               style: TextStyle(fontSize: 18),
             ),
           ),
+          ListTile(
+            title: Text(widget.email, style: TextStyle(fontSize: 18)),
+            onTap: () async {
+              sendToSupport();
+            },
+          ),
           Expanded(
-            child: Container(              
+            child: Container(
               height: size.height * 0.3,
               child: ListView.builder(
                   physics: BouncingScrollPhysics(),
@@ -84,7 +93,10 @@ class _CallInformationState extends State<CallInformation> {
                           launchUrl(Uri.parse('tel:${widget.tel[index]}'));
                         },
                         trailing: ElevatedButton(
-                          child: Icon(Icons.call, color: Colors.white,),
+                          child: Icon(
+                            Icons.call,
+                            color: Colors.white,
+                          ),
                           onPressed: () async {
                             launchUrl(Uri.parse('tel:${widget.tel[index]}'));
                           },

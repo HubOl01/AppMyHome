@@ -78,7 +78,7 @@ class baseAPI {
     myPersonalCheck = personalCheck;
     myNumberPhone = numberPhone;
     await docUser.set(user.toJson());
-    readAvatar();
+    // readAvatar();
     print('ADD: ${docUser.set(user.toJson())}');
     // } else {
     //   baseAPI.updateUser(
@@ -140,14 +140,14 @@ class baseAPI {
     }
   }
 
-  static Future readAvatar() async {
-    final docUser =
-        await FirebaseFirestore.instance.collection('users').doc(myId);
-    final snapshot = await docUser.get();
-    if (snapshot.exists) {
-      print('DATA >>> ${User.fromJson(snapshot.data()!).urlAvatar}');
-      myUrlAvatar = User.fromJson(snapshot.data()!).urlAvatar!;
-      return myUrlAvatar;
-    }
-  }
+  // static Future readAvatar() async {
+  //   final docUser =
+  //       await FirebaseFirestore.instance.collection('users').doc(myId);
+  //   final snapshot = await docUser.get();
+  //   if (snapshot.exists) {
+  //     print('DATA >>> ${User.fromJson(snapshot.data()!).urlAvatar}');
+  //     myUrlAvatar = User.fromJson(snapshot.data()!).urlAvatar!;
+  //     return myUrlAvatar;
+  //   }
+  // }
 }

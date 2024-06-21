@@ -26,7 +26,7 @@ Future getUsers() async {
     myId = nikitaRead.id;
     addUser(nikitaRead.id, userRead.login, userRead.surname, userRead.name, userRead.middle_name,
        userRead.code, nikitaRead.stateAdmin, nikitaRead.personalCheck, nikitaRead.numberPhone);
-    baseAPI.readAvatar();
+    // baseAPI.readAvatar();
     baseAPI.readUser();
   });
 }

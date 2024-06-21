@@ -160,6 +160,7 @@ class _SearchCallPageState extends State<SearchCallPage> {
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => CallInformation(
+                                email: searchResult[index]['email'],
                                   city: searchResult[index]['city'],
                                   name: searchResult[index]['name'],
                                   description: searchResult[index]
