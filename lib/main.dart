@@ -14,7 +14,6 @@ import 'core/Model/User.dart';
 import 'core/PushNotifications/api/notification.dart';
 import 'core/Styles/Colors.dart';
 import 'core/cubit/crud_vote_cubit.dart';
-import 'pages/Login/LoginPage.dart';
 
 Future<void> initializeDefaultFromAndroidResource() async {
   if (defaultTargetPlatform != TargetPlatform.android || kIsWeb) {
