@@ -20,9 +20,15 @@ class VoteDetailPage extends StatefulWidget {
 }
 
 class _VoteDetailPageState extends State<VoteDetailPage> {
+
+  @override
+  void initState() {
+    super.initState();
+    crudVoteCubit = context.read<CrudVoteCubit>();
+  }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+  return Scaffold(
       appBar: AppBar(
         elevation: 0,
         shape: RoundedRectangleBorder(
@@ -31,125 +37,104 @@ class _VoteDetailPageState extends State<VoteDetailPage> {
                 bottomRight: Radius.circular(10))),
         title: Text("Голосование"),
       ),
-      body: BlocBuilder<CrudVoteCubit, List<VoteModel>>(
-        builder: (context, state) {
-          crudVoteCubit.readVote();
-          return FutureBuilder(
-              future: crudVoteCubit.readVote(),
-              builder: (context, snap) {
-                crudVoteCubit.readVote();
-                context.read<CrudVoteCubit>().readVote();
-                return ListView(
-                  physics: const BouncingScrollPhysics(),
-                  children: [
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: Text(
-                        state[widget.id].title,
-                        style: const TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
+      body: StreamBuilder<List<VoteModel>>(
+        stream: crudVoteCubit.voteStream,
+        initialData: crudVoteCubit.state,
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Center(child: CircularProgressIndicator());
+          }
+          final state = snapshot.data!;
+          final vote = state[widget.id];
+
+          return ListView(
+            physics: const BouncingScrollPhysics(),
+            children: [
+              const SizedBox(height: 15),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Text(
+                  vote.title,
+                  style: const TextStyle(
+                      fontSize: 24, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Text(vote.description),
+              ),
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Text(
+                  "Голосование проводится с ${DateFormat("dd.MM.yyyy").format(vote.startDate)} по ${DateFormat("dd.MM.yyyy").format(vote.endDate)}",
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                ),
+              ),
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Column(
+                  children: vote.votingQuestions.map((question) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          question.questionText,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18),
+                        ),
+                        ListCheck(
+                          vote: question,
+                          indexVote: widget.id,
+                          list: question.options,
+                          check: question.selectedOption!,
+                        ),
+                        const SizedBox(height: 10),
+                      ],
+                    );
+                  }).toList(),
+                ),
+              ),
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Text("Контактная информация для вопросов:",
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+              ),
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Text(vote.contacts),
+              ),
+              const SizedBox(height: 30),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: SizedBox(
+                  height: 50,
+                  child: ElevatedButton(
+                      style: ButtonStyle(
+                        padding: const WidgetStatePropertyAll(
+                            EdgeInsets.symmetric(horizontal: 60, vertical: 10)),
+                        backgroundColor: WidgetStatePropertyAll(purpleColor),
+                        foregroundColor: WidgetStatePropertyAll(Colors.white),
+                        elevation: const WidgetStatePropertyAll(0),
+                        shape: WidgetStatePropertyAll(
+                            RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        )),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: Text(state[widget.id].description),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: Text(
-                        "Голосование проводится с ${DateFormat("dd.MM.yyyy").format(state[widget.id].startDate)} по ${DateFormat("dd.MM.yyyy").format(state[widget.id].endDate)}",
-                        style: TextStyle(fontStyle: FontStyle.italic),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: Column(
-                        children: state[widget.id].votingQuestions.map((vote) {
-                          return Column(
-                            // mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                vote.questionText,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 18),
-                              ),
-                              ListCheck(
-                                vote: vote,
-                                indexVote: widget.id,
-                                list: vote.options,
-                                check: vote.selectedOption!,
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                            ],
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: Text("Контактная информация для вопросов:",
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: Text(state[widget.id].contacts),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: SizedBox(
-                        height: 50,
-                        child: ElevatedButton(
-                            style: ButtonStyle(
-                              padding: const WidgetStatePropertyAll(
-                                  EdgeInsets.symmetric(
-                                      horizontal: 60, vertical: 10)),
-                              backgroundColor:
-                                  WidgetStatePropertyAll(purpleColor),
-                              foregroundColor:
-                                  WidgetStatePropertyAll(Colors.white),
-                              elevation: const WidgetStatePropertyAll(0),
-                              shape:
-                                  WidgetStatePropertyAll(RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              )),
-                            ),
-                            onPressed: () {
-                              Get.back();
-                            },
-                            child: Text("Проголосовать")),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                  ],
-                );
-              });
+                      onPressed: () {
+                        Get.back();
+                      },
+                      child: Text("Проголосовать")),
+                ),
+              ),
+              const SizedBox(height: 10),
+            ],
+          );
         },
       ),
     );
@@ -185,10 +170,9 @@ class _CustomCheckState extends State<CustomCheck> {
   @override
   Widget build(BuildContext context) {
     return CheckboxListTile.adaptive(
-        // fillColor: WidgetStateProperty.all(purpleColor),
         hoverColor: Colors.white,
         activeColor:
-            purpleColor, // overlayColor: WidgetStatePropertyAll(Colors.white),
+            purpleColor,
         value: widget.index == widget.check ? true : false,
         contentPadding: const EdgeInsets.all(0),
         // groupValue: e,
@@ -200,9 +184,9 @@ class _CustomCheckState extends State<CustomCheck> {
           setState(() {
             isTrue = value!;
             widget.vote.selectedOption = widget.index;
-            crudVoteCubit
+            context.read<CrudVoteCubit>()
                 .updateCheck(widget.indexVote, voting[widget.indexVote]);
-            crudVoteCubit.readVote();
+            context.read<CrudVoteCubit>().readVote();
           });
         });
   }

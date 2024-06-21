@@ -1,3 +1,4 @@
+import 'package:MyAppHome/core/Styles/Colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -54,27 +55,27 @@ class TotalMonth extends StatelessWidget {
       Table(
         columnWidths: {
           0: FlexColumnWidth(1),
-          1: FixedColumnWidth(50),
+          1: FixedColumnWidth(100),
         },
         children: [
           TableRow(children: [
             SizedBox(
-              child: Text("Кол-во заявок принятых в работу:",
+              child: Text("Кол-во жителей оплатили квитанцию:",
                   style: TextStyle(fontSize: 20)),
             ),
             Text(
-              countTasksComplete().toString(),
+              "0",
               style: TextStyle(fontSize: 20),
               textAlign: TextAlign.right,
             ),
           ]),
           TableRow(children: [
             SizedBox(
-              child: Text("Кол-во выполненных заявок:",
+              child: Text("Общая сумма за текущий месяц:",
                   style: TextStyle(fontSize: 20)),
             ),
             Text(
-              countTasksDone().toString(),
+              "0",
               style: TextStyle(fontSize: 20),
               textAlign: TextAlign.right,
             ),
@@ -108,7 +109,7 @@ class _dropButtonState extends State<_dropButton> {
   @override
   Widget build(BuildContext context) {
     return DropdownButton<String>(
-      style: TextStyle(fontSize: 20, color: Theme.of(context).primaryColor),
+      style: TextStyle(fontSize: 20, color: purpleColor),
       underline: SizedBox(),
       alignment: Alignment.centerRight,
       value: category,
