@@ -100,7 +100,7 @@ class _OneChatsState extends State<OneChats> {
           contentPadding: EdgeInsets.all(10),
           leading: Image.asset('assets/chat/resource29.png'),
           title: Text(
-            user.name,
+            user.name + " - " + user.status,
             style: TextStyle(
                 fontSize: 20, fontWeight: FontWeight.bold, color: greyText),
           ),

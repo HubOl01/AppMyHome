@@ -268,8 +268,8 @@ class _FilingState extends State<Filing> {
                           children: [
                             ListTile(
                               onTap: () {
-                                Get.to(EditorNews());
                                 Get.back();
+                                Get.to(EditorNews());
                               },
                               leading: Icon(
                                 Icons.newspaper,
